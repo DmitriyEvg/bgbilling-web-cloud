@@ -138,25 +138,25 @@ STATICFILES_DIRS = (
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Main domain name
-MAIN_DOMAIN = 'lk4.pudlink.ru'
+MAIN_DOMAIN = 'lk4.yourdomain.ru'
 
 # Specific URL's and PATH to bgbilling server
-BILL_DOMAIN_URL = 'bill.pudlink.ru'
+BILL_DOMAIN_URL = 'bill.yourdomain.xx'
 
 BILL_JSON_PATH = '/bgbilling/jsonWebApi'
 
-BILL_USER = 'dei'
-BILL_PSWD = 'mr79dei'
+BILL_USER = 'username'
+BILL_PSWD = 'userpassord'
 
 BILL_EXECUTER_PATH = '/bgbilling/executer'
 
 # Settings of DB bgbilling
-BILL_DB_HOST = '10.0.8.8'
-BILL_DB_USER = 'bguser'
-BILL_DB_PASSWORD = 'xAj_s3Qza'
-BILL_DB_NAME = 'bgbilling'
+BILL_DB_HOST = 'xxx'
+BILL_DB_USER = 'xxx'
+BILL_DB_PASSWORD = 'xxx'
+BILL_DB_NAME = 'xxx'
 
 # Settings for mail
-BILL_MAIL = 'billing@pudlink.ru'
-BILL_MAIL_PSWD = 'u3Spg9'
-BILL_SMTP_HOST = 'smtp.pudlink.ru'
+BILL_MAIL = ''
+BILL_MAIL_PSWD = 'xxx'
+BILL_SMTP_HOST = 'xxx'
