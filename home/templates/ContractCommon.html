@@ -1,0 +1,127 @@
+{% extends "main.html" %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Главная</h1>
+			</div>
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="#">Главная</a></li>
+				</ol>
+			</div>
+		</div>
+	</div><!-- /.container-fluid -->
+</section>
+
+<!-- ./Content Header (Page header) -->
+
+<!-- Main content -->
+<section class="content">
+	<div class="container-fluid">		
+		<div class="row">			
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">Карточка клиента</h3>
+					</div>
+					<!-- /.card-header -->
+					<div class="card-body p-0">
+						<table class="table">
+							<tr>
+								<td>Имя</td>
+								<td><span class="pull-right">{{ contractParams.comment }}</span></td>
+							</tr>
+							<tr>
+								<td>Номер договора</td>
+								<td><span class="pull-right">{{ contractParams.title }}</span></td>
+							</tr>
+							<tr>
+								<td>Дата открытия договора</td>
+								<td><span class="pull-right">{{ contractParams.dateCreated }}</span></td>
+							</tr>							
+							<tr>
+								<td>Копия договора</td>
+								<td><span class="pull-right"><a href="/home/dogovor.pdf" target="_blank"><span class="pull-right">Скачать<i class="fa fa-download"></i></span></a></span></td>
+							</tr>
+							<tr>
+								<td>E-mail</td>
+								<td><span class="pull-right">{{ contractParams.email }}</span></td>
+							</tr>
+						</table>
+					</div><!-- /.card-body -->
+				</div><!-- /.box -->
+			</div><!-- /.col --> 
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">Оплата и финансы</h3>
+					</div>
+					<!-- /.card-header -->
+					<div class="card-body p-0">
+						<table class="table">
+
+							<tr>
+								<td>Ваш балланс</td>
+								<td><span class="pull-right">{{ contractParams.balance }} руб.</span></td>
+							</tr>
+							<tr>
+								<td>Детализация</td>
+								<td><a href="/bill/detail" class="ajax"><span class="pull-right">Перейти <i class="fa fa-arrow-right"></i></span></a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a href="#proceedPaymant" data-toggle="modal"><span class="pull-right">Пополнить счет <i class="fa fa-ruble""></i></span></a></td>
+							</tr>
+						</table>
+					</div><!-- /.card-body -->
+				</div><!-- /.box -->
+			</div><!-- /.col --> 
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">Активные услуги</h3>
+					</div>
+					<!-- /.card-header -->
+					<div class="card-body p-0">
+						<table class="table">
+							{% for service in serviceList %}
+							<tr>
+								<td>{{ service.attrib.service }}</td>
+								<td><span class="pull-right">{{ service.attrib.col }}</span></td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div><!-- /.card-body -->
+				</div><!-- /.box -->
+			</div><!-- /.col --> 
+
+
+				<!-- <div class="col-md-12">
+					<div class="box box-default">
+						<div class="box-header with-border">
+							<i class="fa fa-info"></i>
+							<h3 class="box-title">Активные услуги</h3>
+							<div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							</div>
+						</div>
+
+						<div class="box-body no-padding">
+							<ul class="nav nav-stacked">
+								{% for service in serviceList %}
+								<li><a href="#" class="text-bold">{{ service.attrib.service }}<span class="pull-right">{{ service.attrib.col }}</span></a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div><!-- /.col -->
+			</div><!-- /.row -->
+
+		</div>
+	</div>
+</section><!-- ./content -->
+
+{% endblock %}

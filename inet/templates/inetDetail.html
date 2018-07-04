@@ -1,0 +1,92 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1>Интернет</h1>
+			</div>    <!-- Breadcrumb -->
+			<div class="col-sm-6">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb float-sm-right">
+						<li class="ajax breadcrumb-item"><a href="/home">Главная</a></li>
+						<li class="breadcrumb-item"><a href="/#">Услуги</a></li>
+						<li class="breadcrumb-item active">Интернет</li>
+					</ol>
+				</nav>
+			</div>    <!-- Breadcrumb end-->
+		</div>
+	</div>
+</section><!-- ./Content Header (Page header) -->
+<!-- Main content -->
+<section class="content">
+	<div class="container-fluid">
+		<div class="row ">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title d-inline"><i class="fa fa-sitemap"></i>Интеренет сервисы</h3>
+						<!-- Date and time range -->
+					</div><!-- /.form group -->				
+					<!-- /.card-header -->
+					<div class="card-body">
+						<table class="table ">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Тип подключения</th>
+									<th style="width: 102px;">Скорость</th>
+									<th>IP адреса</th>
+									<th>VLAN ID</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for str in json_services %}
+								<tr>
+									<td style="width: 10px">{{ forloop.counter }}</td>
+									<td>
+										{%if str.typeId == 1 or str.typeId == 5 or str.typeId == 31 %}
+										IP Subnet
+										{% else %}
+										IP Unnumbered
+										{% endif %}	      
+									</td>
+									<td style="width: 100px">
+										<!-- <a href="#inetSpeed" data-toggle="modal" class="btn"> -->
+											<span >{% if str.inetOptTitle == None %} Безлимитная {% else %} {{ str.inetOptTitle }} {% endif %}</span>
+											 
+										<!-- </a> -->
+									</td>
+									<td style="width: 130px">
+										<div class="input-group-prepend">
+											<form>
+												<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
+													{{ str.ipCount }}	
+													<input type="hidden" name="servFilter" value="{{str.typeId }}">
+													<input type="hidden" name="servFilter" value="{{str.vlan }}">									
+													{% if str.typeId == 14 or str.typeId == 28 %} адрес(а) {% else %} блоки {% endif %}
+												</button>
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="/inet/ipList/">Управление</a>
+												</div>
+											</div>
+										</form>	      
+									</td>
+									<td style="width: 90px">{{ str.vlan }}</td>
+								</tr>
+
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>		
+
+
+
+{% endblock %}

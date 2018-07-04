@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+{% include 'head.html' %}
+    <body class="hold-transition fixed sidebar-mini">
+        <div id="wrapper" class="wrapper">
+        {% include 'header.html' %}
+        {% include 'sidebar.html' %}
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper" id="content-wrapper" style="transition: all 0.05s ease-in-out;">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <!-- /.content-wrapper -->
+            {% include 'modals.html' %}
+            {% include 'footer.html' %}
+        </div>
+        <!-- ./wrapper -->
+        {% include 'scripts.html' %}
+    </body>
+</html>

@@ -1,0 +1,51 @@
+<!-- Модальное окно для пополнения счета -->
+<div class="modal-dialog" role="document"><form method="post">
+  <div class="modal-content"> 
+    <!-- Заголовок модального окна -->
+    <div class="modal-header">
+
+      <h5 class="modal-title">Пополнение счета по договору {{ request.session.contractTitle }}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Основное содержимое модального окна -->
+    <div class="modal-body">
+      {% csrf_token %}
+     <div class="form-group">
+       <label class="col-form-label">Сумма платежа:</label>
+       <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-ruble"></i>
+          </span>
+        </div>
+        <input id="sumPay" type="text" name="sum" class="form-control" data-inputmask="'mask': '9{1,100}.{0,1}9{0,2}'" value="0" />
+        <input name="paymentType" value="" type="hidden" />
+        <input name="shopId" value="113904" type="hidden" />
+        <input name="scid" value="43435" type="hidden" />
+        <input name="customerNumber" value="{{ contractParams.title }}" type="hidden" />
+      </div><!-- /.input group -->
+    </div>
+    <label class="col-form-label">Способ оплаты:</label>
+
+    <div  class="form-group">
+     <select id="typePay" onchange="$('#submitPay').attr('formaction', this.value);" class="form-control">
+       {% if contractFc == "0" %}
+       <option value="https://money.yandex.ru/eshop.xml">Оплатить через Yandex кассу</option>
+       <script>$('#submitPay').attr('formaction', "https://money.yandex.ru/eshop.xml");</script>
+       {% else %}
+       <script>$('#submitPay').attr('formaction', "/bill/invoice.pdf");</script>
+       {% endif %}
+       <option value="/bill/invoice.pdf">Скачать счет на оплату</option>
+     </select>
+   </div>
+ </div>
+ <div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+  <button id="submitPay" type="submit" class="btn btn-info pull-right">Далее</button>
+</div>
+</div>
+</form>
+</div>

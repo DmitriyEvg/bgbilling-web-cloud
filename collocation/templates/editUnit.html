@@ -1,0 +1,166 @@
+<!-- Модальное окно для редактирования юнита -->
+<div class="modal-dialog">
+  <div class="modal-content">    
+    <!-- Заголовок модального окна -->
+    <div class="modal-header">
+      <h4 class="modal-title">Редактировать запись</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    </div><!-- /.modal-header -->
+    <!-- Форма для отправки запроса -->
+    <form class="form-horizontal" action="/collocation/updateUnit/" method="post">{% csrf_token %}     
+      <!-- Основное содержимое модального окна -->
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="control-label">Инвентарный номер</label>
+          <input name="comment1" id="unitIN" name="" class="form-control" value="{{strComment.0}}" />
+        </div><!-- /.form group -->
+
+        <div class="form-group">
+          <label class="control-label">Наименование</label>
+          <input name="comment2" id="unitName" name="" class="form-control" value="{{strComment.1}}" />
+        </div><!-- /.form group -->	  
+
+        <div class="form-group">
+          <label class="control-label">Форм фактор</label>
+          <input name="comment3" id="unitForm" name="" class="form-control" value="{{strComment.2}}" />
+        </div><!-- /.form group -->	  
+
+        <div class="form-group">
+          <label class=" control-label">Серийный номер</label>
+          <input name="comment4" id="unitSN" name="" class="form-control" value="{{strComment.3}}" />
+        </div><!-- /.form group -->	  	  
+
+        <div class="form-group">
+          <label class="control-label">Потребление</label>
+
+          <input name="comment5" id="unitPower" name="" class="form-control" value="{{strComment.4}}" />
+
+        </div><!-- /.form group -->	  	  
+
+        <div class="form-group">
+          <label class=" control-label">Место установки</label>
+
+          <div class="row">
+            <div class="col">
+              <select name="device" class="form-control input-sm" id="ifaceSelect" style="font-family: FontAwesome; font-size: 1em;">
+                {% for deviceColl in deviceCollJSON %}
+                {% if deviceColl.id == strDeviceId %}
+                <option selected value="{{strDeviceId}}:{{invDeviceId}}">&#xf00c{{deviceColl.title}}</option>
+                {% else %}
+                <option value="{{deviceColl.id}}:{{deviceColl.invDeviceId}}">{{deviceColl.title}}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col">
+
+
+              <select name="iface" id="ifaces" class="form-control input-sm" style="font-family: FontAwesome; font-size: 1em;">
+                <option value="{{strIfaceId}}">&#xf00c{{strIfaceTitle}}</option>
+                {% for iface in ifaceList %}
+                <option value="{{iface.attrib.port}}">{{iface.attrib.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div><!-- /.form group -->	   	 	  
+
+        <div class="form-group">
+          <label class="control-label">Примечание</label>
+          <input name="comment6" id="unitDesc" name="" class="form-control" value="{{strComment.5}}" />
+        </div>
+
+        <div class="form-group">
+          <label class=" control-label">Дата размещения</label>
+          <div class='input-group date' id='datePicker'>
+            <input id="dateFrom" name="dateFrom" type='text' class="form-control" value="{{strDateFrom}}" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div><!-- /.form group -->
+
+        <input id="inetServId" type="hidden" name="id" value="{{inetServId}}" />
+        <input id="inetParentId" type="hidden" name="parentId" value="{{inetParentId}}" />
+        <input id="currentTrIndex" type="hidden" name="trIndex" value="{{trIndex}}" />
+
+      </div><!-- /.modal-body -->
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        <button id="submitUnitEdit" type="submit" class="btn btn-primary pull-right">Сохранить</button>
+      </div><!-- ./modal-footer -->
+
+    </form><!-- ./Форма для отправки запроса -->
+
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+<script type="text/javascript">
+
+  $('#datePicker').datepicker({format: "dd-mm-yyyy", language: "ru"});
+  $('#datePicker').on('changeDate', function(ev){
+    $(this).datepicker('hide');
+  });
+
+  $('#ifaceSelect').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    valueSelected = valueSelected.split(':')[1]
+    callIfaceList('/collocation/getIfacesFree','&deviceId='+ valueSelected  + '&selectedDeviceId=' + '{{invDeviceId}}' + '&currentIfaceId=' + '{{strIfaceId}}' + '&currentIfaceTitle=' + '{{strIfaceTitle}}');
+  });
+
+  $('#submitUnitEdit').click(function() {
+    var comment1 = $('#unitIN').val();
+    var comment2 = $('#unitName').val();
+    var comment3 = $('#unitForm').val();
+    var comment4 = $('#unitSN').val();
+    var comment5 = $('#unitPower').val(); 
+    var comment6 = $('#unitDesc').val();
+
+    var inetServId = $('#inetServId').val();
+    var inetParentId = $('#inetParentId').val();
+
+    var device = $('#ifaceSelect').val();
+    var deviceTitle = $('#ifaceSelect option:selected').text();
+    deviceTitle = deviceTitle.replace('','');
+
+    var iface = $('#ifaces').val();
+    var ifaceTitle = $('#ifaces option:selected').text();
+    ifaceTitle = ifaceTitle.replace('','');
+
+    var dateFrom = $('#dateFrom').val();
+
+    var postData = '&id=' + inetServId +
+    '&parentId=' +  inetParentId +
+    '&dateFrom=' + dateFrom +
+    '&device=' + device +
+    '&iface=' + iface +
+    '&comment1=' + comment1 +
+    '&comment2=' + comment2 +
+    '&comment3=' + comment3 +
+    '&comment4=' + comment4 +
+    '&comment5=' + comment5 +
+    '&comment6=' + comment6;
+
+    var currentTrIndex = $('#currentTrIndex').val();
+
+
+    callUnitUpdate("/collocation/updateUnit/", postData);
+    $('#modalDlgParent').modal('toggle');
+
+    $('#trIndex' + currentTrIndex).animate({backgroundColor: "rgba(255, 215, 186, 1)" }, 100).animate({backgroundColor: "rgba(255, 215, 186, 0)" }, 3000);
+
+    $('#trIndex' + currentTrIndex).children()[0].innerHTML = dateFrom;
+    $('#trIndex' + currentTrIndex).children()[1].innerHTML = deviceTitle + "/" + ifaceTitle;
+    $('#trIndex' + currentTrIndex).children()[2].innerHTML = comment1;
+    $('#trIndex' + currentTrIndex).children()[3].innerHTML = comment2;
+    $('#trIndex' + currentTrIndex).children()[4].innerHTML = comment3;
+    $('#trIndex' + currentTrIndex).children()[5].innerHTML = comment4;
+    $('#trIndex' + currentTrIndex).children()[6].innerHTML = comment5;
+    $('#trIndex' + currentTrIndex).children()[7].innerHTML = comment6;
+
+    return false;
+  });
+</script>

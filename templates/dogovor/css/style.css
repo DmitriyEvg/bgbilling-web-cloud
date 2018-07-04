@@ -1,0 +1,81 @@
+body{
+	width: 840px;
+	font-size: 20px;
+	/*font-family: arial;*/
+}
+
+h3{
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+}
+
+h4{
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+}
+
+table{
+	width: 100%;
+	font-size: 1em;
+}
+
+th,td {
+	border: none;
+}
+
+p{
+	text-indent: 3em;
+	font-size: 1em;
+	text-align: justify; 
+}
+
+li,ul{
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+	text-align: justify;
+	list-style-type: none;
+}
+
+.listMain li{
+	padding-bottom: .5em;
+}
+
+.listMain p{
+	margin: 0;
+	padding: 0;
+	text-indent: 3em;
+	font-size: 1em;
+	text-align: justify; 
+}
+
+.listDisc li{
+	margin-left: 2em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	list-style-type: disc;
+}
+
+.table-footer{
+	width: 100%;
+	font-size: 1em;
+	border-collapse: collapse;
+	margin-bottom: 2em;
+}
+.table-footer td, .table-footer th{
+	border: 1px solid #000;
+}
+
+.table-sign{
+	width: 100%;
+	font-size: 1em;
+	border-collapse: collapse;
+}
+
+.table-sign th, .table-sign td{
+	font-weight: bold;
+	text-align: left;
+	padding-top: 1em;
+}

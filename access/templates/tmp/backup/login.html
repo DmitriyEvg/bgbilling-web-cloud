@@ -1,0 +1,729 @@
+{% load static %}
+{% if request.POST.ajax != "true" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Личный кабинет |  Login </title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="{% static "vendors/bootstrapnew/dist/css/bootstrap.min.css" %}">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static "vendors/font-awesome/css/font-awesome.min.css" %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static "dist/css/ionicons.min.css" %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static "dist/css/AdminLTEnew.css" %}">
+  <link rel="stylesheet" href="{% static "plugins/wizard/wizard.css" %}">
+
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700">
+  
+
+  <!-- Jquery scripts -->
+  <script src="{% static "vendors/jquery-1.11.1/jquery.min.js" %}"></script>
+  <!-- Jquery validation -->
+  <script src="{% static "vendors/jquery-validation/jquery.validate.min.js" %}"></script>
+  <script src="{% static "vendors/jquery-validation/additional-methods.min.js" %}"></script>
+  <script src="{% static "vendors/jquery-validation/ru.messages.js" %}"></script>
+  <!-- Jquery input mask plugin -->
+  <script src="{% static "plugins/input-mask/jquery.mask.min.js" %}"></script>
+
+  <!-- Bootstrap 4 -->
+  <script src="{% static "bootstrapnew/js/bootstrap.min.js" %}"></script>
+  
+  <!-- DaData -->
+  <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.5.0/dist/css/suggestions.min.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.5.0/dist/js/jquery.suggestions.min.js"></script>
+  
+  <!-- Application scripts -->
+  <script src="{% static "js/ajax-login.js" %}"></script>
+  
+</head>
+
+<body class="hold-transition register-page">
+<div class="login-box" id="loginbox">
+
+{% endif %}
+  <div class="login-logo-img" style="background: url('https://lkbilling.pudlink.ru/static/img/linux-vps.png') no-repeat 0 0; height: 8em; background-size: contain;"/></div>
+    {% if typeForm == "Login" or typeForm == "Logout" %}
+    <div class="card card-body login-card-body">
+	  <h4 class="login-box-msg">Вход в личный кабинет</h4>
+
+      <form id="formLogin" action="/access/auth/" method="post">{% csrf_token %}
+	  <div class="form-group has-feedback ">
+          <input type="email" class="form-control" placeholder="Email" name="username">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="Password" name="password">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+		<div class="form-group error">{{ errorLogin }} {{ errorPassword }}</div>
+	    <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+        </div>
+      </form>
+      <p class="mb-1">
+	  <a href="/access/accountCreate/" class="ajax block float-left">Зарегистрироваться</a>     
+<p class="mb-0">
+      <a class="ajax float-left" href="/access/recovery/">Восстановить доступ к аккаунту</a> </p>
+    </div>	  
+	<script>
+	// Валидация формы входа
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid",
+      errorElement: "span"
+    });  
+    $( "#formLogin" ).validate({
+      submitHandler: function(form) {
+        form.submit();
+        },
+      rules: {
+        username: {
+          required: true,
+          email: true
+        },
+        password: "required"
+      },
+      messages: {
+        username: {
+			required: "Введите адрес электронной почты",
+			email: "Не правильный адрес эл. почты"
+		},
+		password: {
+			required: "Введите пароль"
+		}
+      }
+    });
+    </script>
+    {% endif %}
+
+    {% if typeForm == "accountCreate" %}
+
+	<div class="card-body login-card-body card">
+ 
+      <h4 class="login-box-msg">Регистрация</h4>
+
+      <form id="formRegister" action="/access/register/" method="post">{% csrf_token %}
+        <div class="form-group has-feedback">
+          <input class="form-control" placeholder="Email" type="email" name="username">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input id="password" class="form-control" placeholder="Пароль" type="password" name="password">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input class="form-control" placeholder="Подтвердите пароль" type="password" name="passwordAgain">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        </div>
+		<div class="form-group error">{{errorMsg}}</div>
+		<div class="form-group">
+          <button id="regButton" type="submit" class="btn btn-primary btn-block btn-flat">Зарегистрироваться</button>
+		</div>
+		     <p><a href="/access/login/" class="ajax block float-left">Войти</a></p>
+      </form>
+    </div>	
+	<script>
+	// Выставляем правильный url
+	window.history.pushState("","", '/access/accountCreate/');
+	// Валидация формы создания аккаунта
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid",
+      errorElement: "span"
+    });
+    $( "#formRegister" ).validate({
+      submitHandler: function(form) {
+		$("#modal-backdrop").css({"display" : "block"});
+		$("#regButton").html('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
+
+	    var params = "&";
+		var url = $( '#formRegister' ).attr( 'action' );
+		$(form).find ('input').each(function() {
+		  if (this.name != ''){
+            params = params + this.name + '=' + $(this).val() + '&';
+		  }
+        });
+
+		callPage(url, false, params);
+        //form.submit();
+        },
+      rules: {
+        username: {
+          required: true,
+          email: true
+        },
+        password: {
+			required: true,
+			rangelength: [6, 16]
+			},
+		passwordAgain:  {
+          equalTo: "#password"
+		}
+      },
+      messages: {
+        username: {
+         required: "Введите адрес электронной почты",
+         email: "Не правильный адрес эл. почты"
+	    },
+	    password: {
+	      required: "Введите пароль"
+	    },
+	    passwordRetype: {
+	      required: "Подтвердите пароль"
+	    }		
+      }
+    });
+    </script>
+    {% endif %}          
+
+    {% if typeForm == "codeAccess" %}
+
+    <div class="card-body login-card-body card">
+
+                 <div class="f1-steps">
+                          <div class="f1-progress">
+                              <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div>
+                          </div>
+                          <div class="f1-step active">
+                            <div class="f1-step-icon"><i class="fa fa-envelope"></i></div>
+                            <p class="wizard-msg">Код</br>подтверждения</p>
+                          </div>
+                          <div class="f1-step">
+                            <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                            <p class="wizard-msg">Тип</br>аккаунта</p>
+                          </div>
+                            <div class="f1-step">
+                            <div class="f1-step-icon"><i class="fa fa-info"></i></div>
+                            <p class="wizard-msg">Данные</p>
+                          </div>
+            </div>
+  	  <p class="text-muted">
+			    На указанный email <span style="color:#0089ff;">{{ userName }}</span> было отправлено письмо с кодом подтверждения.
+			    Для продолжения, введите код в поле ввода.
+	  </p>
+      <form id="formCodeAccess" action="/access/requisite/" method="post">{% csrf_token %}
+      
+        <div class="form-group has-feedback">
+          <input class="form-control" placeholder="Код подтверждения" type="text" name="codeAccess">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-lock form-control-feedback"></span>
+		  <span class="error" for="codeAccess">{{ errorMsg }}</span>
+        </div>
+	    <p><a id="codeRefrash" href="">Отправить код повторно <i class="fa  fa-refresh"></i></a></p>
+	    <div class="clear-line"></div>
+	    <div class="clear-line"></div>
+	    <div class="clear-line"></div>
+	    <button type="submit" class="btn btn-primary btn-flat pull-right">Далее</button>
+		<button id="toRegister" class="btn btn-default btn-flat pull-left" >Назад</button>
+      </form>
+    </div>
+	<script>
+	$(".modal-backdrop").css({"display" : "none"});
+	// повторная отправка кода подтверждения
+	$("#codeRefrash").click( function() {
+		var url = '/access/register/';
+		params = "&codeAccess=refresh"
+		callPage(url, false, params);
+		return false;
+	});
+	// возврат на стр. accountCreate
+	$("#toRegister").click( function() {
+		var url = '/access/accountCreate/';
+		callPage(url, true, "");
+		return false;
+	});
+	// Валидация формы подтверждения
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid",
+      errorElement: "span"
+    });  
+    $( "#formCodeAccess" ).validate({
+      submitHandler: function(form) {
+	    var params = "&";
+		var url = $( '#formCodeAccess' ).attr( 'action' );
+		$(form).find ('input').each(function() {
+		  if (this.name != ''){
+            params = params + this.name + '=' + $(this).val() + '&';
+		  }
+        });
+		callPage(url, false, params);
+        //form.submit();
+        },
+      rules: {
+        codeAccess: "required",
+      },
+      messages: {
+	    codeAccess: {
+	      required: "Необходимо ввести код подтверждения"
+	    }		
+      }
+    });
+    </script>
+	{% endif %}
+	  
+	{% if typeForm == "Requisite" %}
+    <div id="accountType-Block" class="card-body login-card-body card">
+	  <h5>Шаг 2/3</h5>
+      <h4 class="login-box-msg">Тип аккаунта</h4>
+
+	    <form id="accountType-form" >
+	        <div class="form-group">
+	        	<div class="custom-control custom-radio">
+	  				<input type="radio" id="customRadio1"  class="custom-control-input" name="typeClient" value="1" checked>
+	  				<label class="custom-control-label form-check-label" for="customRadio1">Физическое лицо</label>
+				</div>
+				<div class="custom-control custom-radio">
+	 				 <input type="radio" id="customRadio2" class="custom-control-input" name="typeClient" value="2">
+	 				 <label class="custom-control-label form-check-label" for="customRadio2"> Юридическое лицо</label>
+				</div>
+	        	
+	                          <!-- <div class="radio"><label><input type="radio" name="typeClient" value="3" disabled> ИП</label></div>
+			  <div class="radio"><label><input type="radio" name="typeClient" value="4" disabled> Гос.учреждение</label></div> -->
+	        </div>
+  <div class="dropdown-divider"></div>
+
+		    <div class="form-group">
+		    	<div class="custom-control custom-checkbox" id="submit1">
+	  				<input type="checkbox" class="custom-control-input" id="customCheck1" name="submit1" required>
+	  				<label class="custom-control-label form-check-label" for="customCheck1">Я ознакомился(-ась) и согласен(-на) с условиями <a href="#">Договора об оказании услуг связи</a></label>
+				</div>
+	 			<div class="custom-control custom-checkbox" id="submit2">
+	  				<input type="checkbox" class="custom-control-input" id="customCheck2" name="submit2" required>
+	  				<label class="custom-control-label form-check-label" for="customCheck2">Я ознакомился(-ась) <a style="color: #0093ff;text-decoration: none;" href="#"><span>с Политикой в отношении обработки и защиты персональных данных</a> и даю свое Согласие на обработку персональных данных в соответствии с Законом "О персональных данных" №152-ФЗ от 27.07.2006 года</label>
+				</div>
+	  	    </div>
+
+			<button id="toRegister" type="button" class="btn btn-default btn-flat pull-left">Назад</button>
+		    <button type="submit" class="btn btn-primary btn-flat pull-right">Далее</button>
+   		</form>
+	</div>
+	
+	<div id="accountRequisite-Block" class="card-body login-card-body card" style="display: none;">
+	  <h5>Шаг 3/3</h5>
+      <h4 class="login-box-msg">Ваши данные</h4>
+      <form id="accountRequisite-form"  action="/access/wellcome/" method="post" >{% csrf_token %}
+        <div id="accountRequisite-group">
+		  <!-- Здесь будут поля для ввода данных -->
+		</div>
+	    <div class="clear-line"></div>
+	    <div class="clear-line"></div>
+	    <div class="clear-line"></div>
+		<div class="form-group">
+		  <button id="to_accountType" type="button" class="btn btn-default pull-left">Назад</button>
+		  <button type="submit" class="btn btn-primary btn-flat pull-right">Готово</button>
+		</div>
+      </form>
+	</div>
+	
+	<script>
+	// Выставляем правильный url
+	window.history.pushState("","", '/access/requisite/');
+
+	// возврат на стр. accountCreate
+	$("#toRegister").click( function() {
+		var url = '/access/accountCreate/';
+		callPage(url, true, "");
+		return false;
+	});
+	
+	// Кнопка назад к типу аккаунта
+	$("#to_accountType").click(function() {
+	  $('#loginbox').css({ "width" : "360px"});
+      $("#accountType-Block").css({ "display": "block"});
+      $("#accountRequisite-Block").css({ "display": "none"});
+    });
+	
+    // Установки валидации форм
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid",
+      errorElement: "span",
+	  errorPlacement: function (error, element) {
+	    if (element.prop('name') === 'submit1') {
+          error.insertAfter('#submit1');
+        }
+	    else if (element.prop('name') === 'submit2') {
+	      error.insertAfter('#submit2');
+        }
+		else {
+		  error.insertAfter(element);
+		}
+	  }
+    });  
+	
+    // Валидация формы "тип аккаунта"
+    $( "#accountType-form" ).validate({
+      submitHandler: function(form) {
+	    // Очищаем блок #accountRequisite-group
+	    $("#accountRequisite-group").empty();
+		// Выкл/Вкл - #accountType-Block / #accountRequisite-Block
+        $("#accountType-Block").css({ "display": "none"});
+        $("#accountRequisite-Block").css({ "display": "block"});
+		// Определяем тип аккаунта
+	    var clientType = $("#accountType-Block input:radio:checked").val();
+		// Растягиваем  род. окно до 460px
+		$('#loginbox').css({});
+		createRequisiteFields(clientType);
+        },
+      rules: {
+        submit1: "required",
+		submit2: "required"
+      },
+	  messages: {
+		submit1: "Необходимо дать согласие",
+		submit2: "Необходимо дать согласие"
+	  }
+	});
+	
+	// Функция формирования полей реквизитов для разных типов аккаунта
+	function createRequisiteFields(clientType) {
+		switch (clientType) {
+			case '1':
+				// Формирование полей и валидации форм для физ.лиц
+				$("#accountRequisite-group").append('\
+					<div class="form-group">\
+					  <label for="firstName" control-label text-right">Имя</label>\
+					  <input id="firstName" type="text" class="form-control" placeholder="Имя" name="firstName">\
+					</div>\
+					<div class="form-group">\
+					  <label for="firstName" control-label">Фамилия</label>\
+				      <input type="text" class="form-control" placeholder="Фамилия" name="lastName">\
+					</div>\
+					<div class="form-group">\
+					  <label for="firstName" control-label">Телефон</label>\
+					  <input id="phoneNumber" type="phone" class="form-control" placeholder="Телефон" name="phoneNumber">\
+					</div>\
+					<input type="hidden" name="accountType" value="type1">\
+			    ').each(function() {
+					// Подключение маски для поля тлф.
+					$("#phoneNumber").mask("+7(999) 999-9999");
+					// Валидация формы accountRequisite-form для физ.лиц
+					$( "#accountRequisite-form" ).validate({
+						submitHandler: function(form) {
+						form.submit();
+						},
+						rules: {
+							firstName: "required",
+							lastName: "required",
+							phoneNumber: "required"
+						},
+						messages: {
+							firstName: "Поле обязательно для заполнения",
+							lastName: "Поле обязательно для заполнения",
+							phoneNumber: "Поле обязательно для заполнения"
+						}
+					});
+				});
+				break;
+			case '2':
+				$("#accountRequisite-group").append('\
+				<div class="form-group">\
+				    <label for="party" control-label">Название</label>\
+					<input id="party" name="party" class="form-control suggestions-input" placeholder="Введите название или ИНН" autocomplete="off" style="box-sizing: border-box;" type="text">\
+				</div>\
+				<div class="form-group">\
+				    <label for="cParam11" control-label">Банк</label>\
+					<input id="cParam11" name="cParam11" class="form-control" placeholder="Введите наим. банка или БИК">\
+				</div>\
+				<div class="form-group">\
+					<label for="cParam10" control-label">Расчетный счет</label>\
+					<input id="cParam10" name="cParam10" class="form-control" placeholder="Расчетный счет">\
+				</div>\
+				<div class="form-group">\
+					<label for="cParam9" control-label">Контактный телефон</label>\
+					<input id="cParam9" name="cParam9" class="form-control" placeholder="Введите контактный телефон">\
+				</div>\
+				<input type="hidden" id="cParam2" name="cParam2" class="form-control" placeholder="Краткое наименование предприятия">\
+				<input type="hidden" id="cParam3" name="cParam3" class="form-control" placeholder="Полное наименование предприятия">\
+				<input type="hidden" id="cParam4" name="cParam4" class="form-control" placeholder="Юридический адрес">\
+				<input type="hidden" id="cParam5" name="cParam5" class="form-control" placeholder="Почтовый адрес">\
+				<input type="hidden" id="cParam6" name="cParam6" class="form-control" placeholder="ИНН">\
+				<input type="hidden" id="cParam7" name="cParam7" class="form-control" placeholder="КПП">\
+				<input type="hidden" id="cParam8" name="cParam8" class="form-control" placeholder="ОГРН">\
+				<input type="hidden" id="cParam16" name="cParam16" class="form-control" placeholder="Должность и полное Ф.И.О. уполномоченного лица">\
+				<input type="hidden" id="cParam14" name="cParam14" class="form-control" placeholder="Должность и полное Ф.И.О. уполномоченного лица (в род. падеже)Краткое Ф.И.О уполномоченного лица">\
+				<input type="hidden" id="cParam15" name="cParam15" class="form-control" placeholder="Краткое Ф.И.О уполномоченного лица">\
+				<input type="hidden" id="cParam12" name="cParam12" class="form-control" placeholder="Корреспондентский счет">\
+				<input type="hidden" id="cParam13" name="cParam13" class="form-control" placeholder="БИК">\
+				<input type="hidden" name="accountType" value="type2">\
+			    ').each(function() {
+					// Подключение маски для поля тлф.
+					$("#cParam9").mask("+7(999) 999-9999");
+					// Подключение DaData поле ИНН
+					$("#party").suggestions({
+						token: "bd494950ed1bef112081b5328ec4edea63de8406",
+						type: "PARTY",
+						count: 5,
+						/* Вызывается, когда пользователь выбирает одну из подсказок */
+						onSelect: function(suggestion) {
+							dataType = suggestion.data.type
+							if (dataType == "INDIVIDUAL"){
+								shortNameArray = suggestion.value.split(' ');
+								shortName = shortNameArray[1] + " " + shortNameArray[2].substr(0,1) + ". " + shortNameArray[3].substr(0,1) + ".";
+								$('#cParam2').val(suggestion.value);
+								$('#cParam3').val(suggestion.data.name.full_with_opf);
+								$('#cParam4').val(suggestion.data.address.value);
+								$('#cParam5').val(suggestion.data.address.value);
+								$('#cParam6').val(suggestion.data.inn);
+								$('#cParam7').val("");
+								$('#cParam8').val(suggestion.data.ogrn);
+								$('#cParam16').val(suggestion.data.name.full_with_opf);
+								$('#cParam15').val(shortName);
+							} else {
+								shortNameArray = suggestion.data.management.name.split(' ');
+								shortName = shortNameArray[0] + " " + shortNameArray[1].substr(0,1) + ". " + shortNameArray[2].substr(0,1) + ".";
+								$('#cParam2').val(suggestion.value);
+								$('#cParam3').val(suggestion.data.name.full_with_opf);
+								$('#cParam4').val(suggestion.data.address.value);
+								$('#cParam5').val(suggestion.data.address.value);
+								$('#cParam6').val(suggestion.data.inn);
+								$('#cParam7').val(suggestion.data.kpp);
+								$('#cParam8').val(suggestion.data.ogrn);
+								$('#cParam16').val(suggestion.data.management.post + " " + suggestion.data.management.name);
+								$('#cParam15').val(shortName);
+							}
+						}
+					});
+			
+					// Подключение DaData поле Банк
+					$("#cParam11").suggestions({
+						token: "bd494950ed1bef112081b5328ec4edea63de8406",
+						type: "BANK",
+						count: 5,
+						/* Вызывается, когда пользователь выбирает одну из подсказок */
+						onSelect: function(suggestion) {
+							$('#cParam12').val(suggestion.data.correspondent_account);
+							$('#cParam13').val(suggestion.data.bic);
+							}
+					});	
+				});
+				
+				// Валидация формы accountRequisite-form для юр.лиц
+				$( "#accountRequisite-form" ).validate({
+					submitHandler: function(form) {
+						form.submit();
+					},
+					rules: {
+						party: "required",
+						cParam9: "required",cParam10: "required",cParam11: "required"
+					},
+					messages: {
+						party: "Поле обязательно для заполнения",
+						cParam9: "Поле обязательно для заполнения",
+						cParam10: "Поле обязательно для заполнения",
+						cParam11: "Поле обязательно для заполнения"
+					}
+				});
+				break;
+		}
+	return true;
+	}
+    </script>
+	
+    {% endif %}
+
+	{% if typeForm == "Recovery" %}
+	<div class="card card-body login-card-body">
+	  <h4 class="login-box-msg">Восстановление пароля</h4>
+	  <form id="formRecovery" action="/access/sendRecovery/" method="post">{% csrf_token %}
+    	<div class="form-group has-feedback">
+          <input type="email" class="form-control" placeholder="Email" name="username">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+	    <div class="form-group error">{{ errorMsg }}</div>
+	    <div class="form-group">
+        	<button id="sendRecovery" type="submit" class="btn btn-primary btn-block btn-flat">Далее</button>
+
+        </div>
+        <p><a href="/access/login/" class="ajax block float-left">Войти</a></p>
+
+      </form>
+
+    </div>	  
+	<script>
+	// Валидация формы создания аккаунта
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid",
+      errorElement: "span"
+    });
+    $( "#formRecovery" ).validate({
+      submitHandler: function(form) {
+		$("#modal-backdrop").css({"display" : "block"});
+	    $("#sendRecovery").html('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
+	    //$("#sendRecovery").prop('disabled', true);
+
+	    var params = "&";
+		var url = $( '#formRecovery' ).attr( 'action' );
+		$(form).find ('input').each(function() {
+		  if (this.name != ''){
+            params = params + this.name + '=' + $(this).val() + '&';
+		  }
+        });
+		callPage(url, false, params);
+        //form.submit();
+        },
+      rules: {
+        username: {
+          required: true,
+          email: true
+        }
+      },
+      messages: {
+        username: {
+         required: "Введите адрес электронной почты",
+         email: "Не правильный адрес эл. почты"
+	    }
+      }
+    });
+	</script>
+	{% endif %}
+	
+	{% if typeForm == "RecoveryMessage" %}
+	<div class="login-box-body">
+	  <h4 class="login-box-msg">Восстановление пароля</h4>
+      <p class="text-muted">
+	      На указанный email <span style="color:#0089ff;">{{ userName }}</span> было отправлено письмо с сылкой для
+		  восстановления пароля. Для продолжения необходимо пройти по данной ссылке и следовать дальнейшим инструкциям.
+	   </p>
+	   <div class="clear-line"></div>
+	   <p class="mb-0">
+      <a class="ajax float-left" href="/access/login/">Восстановить доступ к аккаунту</a> </p>
+	   
+	</div>
+	<script>
+		$(".modal-backdrop").css({"display" : "none"});
+	</script>
+	{% endif %}
+
+	{% if typeForm == "passwordChange" %}
+	<div class="login-box-body">
+	  <h4 class="login-box-msg">Изменение пароля</h4>
+      <form id="formChangePassword" action="/access/recoveryPassword/" method="post">{% csrf_token %}
+        <div class="form-group has-feedback">
+          <input class="form-control" placeholder="Email" type="email" name="username" value="{{ userName }}" readonly>
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input id="password" class="form-control" placeholder="Пароль" type="password" name="password">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input class="form-control" placeholder="Подтвердите пароль" type="password" name="passwordAgain">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        </div>
+		<div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Далее</button>
+		</div>
+      </form>
+	  <div><a href="/access/login/" class="ajax text-center block">Вернуться на страницу входа</a></div>
+	</div>
+	<script>
+	// Валидация формы изменения пароля
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid",
+      errorElement: "span"
+    });
+    $( "#formChangePassword" ).validate({
+      submitHandler: function(form) {
+        form.submit();
+        },
+      rules: {
+        password: {
+			required: true,
+			rangelength: [6, 16]
+			},
+		passwordAgain:  {
+          equalTo: "#password"
+		}
+      },
+      messages: {
+	    password: {
+	      required: "Введите пароль"
+	    },
+	    passwordRetype: {
+	      required: "Подтвердите пароль"
+	    }		
+      }
+    });
+    </script>
+	{% endif %}
+
+	{% if typeForm == "pswdChangeSuccess" %}
+	<div class="login-box-body">
+	  <h4 class="login-box-msg">Пароль успешно изменен</h4>
+	  <div><a href="/access/login/" class="ajax text-center block">Вернуться на страницу входа</a></div>
+	</div>
+	{% endif %}
+	
+	{% if typeForm == "tokenError" %}
+	<div class="login-box-body">
+	  <h4 class="login-box-msg">Предупреждение</h4>
+	  <p>{{errorMsg}}</p>
+	  <div><a href="/access/login/" class="ajax text-center block">Вернуться на страницу входа</a></div>
+	</div>
+	<script>
+	{% endif %}
+	
+	
+ <script>
+	setEventPopState();
+	window.onload = setEventClickAjax(".ajax");
+ </script>
+
+	
+{% if request.POST.ajax != "true" %}
+    <div class="login-box-footer">ООО "Пудлинк" <a href="http://pudlink.ru">http://pudlink.ru</a></div>
+  </div>  
+{% endif %}
+
+    {% if typeForm == "Logout" %}
+    <!-- Block logout -->  
+    <div class="row">
+      <div class="iframe-container">
+        <iframe id="iframeId" style="display: none"></iframe>
+      </div>
+    </div>
+
+    <script>
+      var iframeId = document.getElementById('iframeId');
+      iframeId.src="https://support.pudlink.ru/logout.php";
+      iframeId.onload = function() {
+      iframeId.src="https://virtcloud.pudlink.ru/accounts/logout/";
+        iframeId.onload = function() {
+          window.history.pushState("","", '/access/login/');
+          }
+      }
+    </script>
+
+
+   
+    <!--./Block logout -->
+    {% endif %}
+
+<div id="modal-backdrop" class="modal-backdrop show" style="display: none;"></div>
+
+	
+{% if request.POST.ajax != "true" %}
+
+</body>
+</html>
+{% endif %}

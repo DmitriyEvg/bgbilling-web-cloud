@@ -1,0 +1,87 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1 style="float: left; padding-right: 1em;" >Сводный отчет за: </h1>
+    	<!-- <div class="input-append date" id="datepicker" data-date="09-2017" data-date-format="mm-yyyy"> -->
+    	<div class="input-group">
+	    <button  type="button" class="btn btn-default pull-right" name="date" id="datepicker" data-date="{{ month }}-{{ year }}" data-date-format="mm-yyyy">
+		<span id="select-date">{{ month }} / {{ year }}</span>
+		<span><i class="fa fa-calendar"></i></span>
+        	<i class="fa fa-caret-down"></i>
+	    </button>
+	</div>
+
+	{% for str in summ_result %}
+	    <h4>Итого: <strong>{{ str.total }}</strong></h4>
+	{% endfor %}
+
+	 <a href="contractsDetail.csv">Скачать</a>
+	 
+    <ol class="breadcrumb">
+        <li><a href="/home" class="ajax"><i class="fa fa-dashboard"></i> Главная</a></li>
+        <li class="active"> Оплата и финансы</li>
+        <li class="active"> Детализация</li>
+    </ol>
+</section><!-- ./Content Header (Page header) -->
+
+<!-- Main content -->
+<section class="content">
+
+<table class="table table-bordered table-hover" id="data_Table">
+    <tr style="background-color: gray; color: white; font-weight: bold;">
+	<td>№ договора</td>
+	<td>Описание</td>
+	<td>Дата заключения договора</td>
+	<td>Наименование услуги</td>
+	<td>Количество</td>
+	<td>Сумма наработки</td>
+	<td>Действующий тариф на услугу (персональный)</td>
+	<td>Действующий тариф на услугу (глобальный)</td>
+    </tr>
+
+{% for str in json_result %}
+    <tr>
+	<td>{{ str.title }}</td>	
+	<td>{{ str.comment }}</td>	
+	<td>{{ str.date1 }}</td>
+	<td>{{ str.srvName }}</td>
+	<td>{{ str.col }}</td>
+	<td>{{ str.summa }}</td>
+	<td>{{ str.pTariff }}</td>
+	<td>{{ str.gTariff }}</td>
+    </tr>
+{% endfor %}
+
+</table>
+
+</section><!-- /.content -->
+
+<script type="text/javascript">
+
+$("#datepicker").datepicker( {
+    format: "mm-yyyy",
+    viewMode: "months", 
+    minViewMode: "months"
+});
+
+$('#datepicker').on('changeDate', function(e) { 
+    var value = $("#datepicker").data('datepicker').getFormattedDate('mm/yyyy');
+    //$('#select-date').text(value);
+    $('#datepicker').datepicker('hide');
+
+    // Формируем данные
+    data = '&Year=' + value.split('/')[1] + '&Month=' + value.split('/')[0];
+
+    // Получаем текущй url
+    current_url_path = window.location.pathname.substr(0,window.location.pathname.length - 1);
+
+    // Отправляем POST запрос
+    callPage(current_url_path, true, data);
+
+});
+
+</script>
+
+{% endblock %}

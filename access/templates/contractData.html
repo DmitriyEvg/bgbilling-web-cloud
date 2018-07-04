@@ -1,0 +1,170 @@
+{% extends "main.html" %}
+{% block content %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Данные</h1>
+            </div>    <!-- Breadcrumb -->
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="ajax breadcrumb-item"><a href="/home" >Главная</a></li>
+                        <li class="breadcrumb-item"><a href="/#" >Аккаунт</a></li>
+                        <li class="breadcrumb-item active">Данные</li>
+                    </ol>
+                </nav>
+            </div>    <!-- Breadcrumb end-->
+        </div>
+    </div>
+</section>
+<!-- ./Content Header (Page header) -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% if updateAction %}                
+        {% if errorCheckInput %}
+        <div class="col-md-12">
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fa fa-warning"></i> Необходимо заполнить все поля!</h5>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fa fa-check"></i> Данные успешно обновлены.</h5>
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if contractParams.fc == '1' %}
+        <div class="col-md-12" hidden="true">
+            <form class="form-horizontal" method="post">{% csrf_token %}
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <i class="fa fa-list-alt"></i>
+                        <h3 class="box-title">Организация</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >Наименование юридического лица</label>
+                            <div class="col-sm-8">
+                                <input id="party" name="party" type="text" class="form-control" placeholder="Введите название или ИНН"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>  
+        {% endif %}
+
+        <div class="row">            
+            {% csrf_token %}
+            <div class="col-md-3">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <h3 class="profile-username text-center">{{ contractParams.comment }}</h3>
+                        <p class="text-muted text-center">Договор {{ contractParams.title }} <a href="/home/dogovor.pdf" target="_blank"><i class="fa fa-download"></i></a></p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Почта</b> <a class="float-right">{{ contractParams.email }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Телефон</b> <a class="float-right">{{ contractParams.phone }}</a>
+                            </li>
+                        </ul>       
+                        <a href="/access/pswdChange" class="btn btn-block btn-default" role="button" aria-pressed="true">Смена пароля</a>                     
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">    
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"> <i class="fa fa-list-alt"></i> Реквизиты</h3>
+                    </div><!-- /.box-header -->
+                    <div class="card-body">
+                        <form class="form-horizontal" method="post">
+                            {% for contractParam in contractParams.params %}
+                            <div class="form-group">
+                                <label for="cParam{{ contractParam.attrib.pid }}" class="col-sm-5 control-label">{{ contractParam.attrib.title }}</label>
+                                <div class="col">
+                                    <input id="cParam{{ contractParam.attrib.pid }}" name="cParam{{ contractParam.attrib.pid }}" class="form-control" value="{{ contractParam.attrib.value }}" />
+                                    {% if contractParam.attrib.title == "Банк" %}
+                                    <script> $("#" + "cParam{{ contractParam.attrib.pid }}").attr('placeholder', 'Введите название Банка или БИК'); </script>
+                                    {% endif %}
+                                </div>
+                            </div><!-- /.form group -->
+                            {% endfor %}
+                            <div class="box-footer">
+                                <label class="text-{{ typeMsg }}">{{ formMsg }}</label>
+                                <button type="submit" class="btn btn-success pull-right" formaction="/access/contractDataUpdate/">Сохранить</button>
+                            </div>
+                        </form><!-- /.form -->
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>    
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section><!-- ./content -->
+
+<script type="text/javascript">
+    $("#party").suggestions({
+     token: "bd494950ed1bef112081b5328ec4edea63de8406",
+     type: "PARTY",
+     count: 5,
+     /* Вызывается, когда пользователь выбирает одну из подсказок */
+     onSelect: function(suggestion) {
+
+         dataType = suggestion.data.type
+
+         if (dataType == "INDIVIDUAL"){
+          shortNameArray = suggestion.value.split(' ');
+          shortName = shortNameArray[1] + " " + shortNameArray[2].substr(0,1) + ". " + shortNameArray[3].substr(0,1) + ".";
+
+          $('#cParam2').val(suggestion.value);
+          $('#cParam3').val(suggestion.data.name.full_with_opf);
+          $('#cParam4').val(suggestion.data.address.value);
+          $('#cParam5').val(suggestion.data.address.value);
+          $('#cParam6').val(suggestion.data.inn);
+          $('#cParam7').val("");
+          $('#cParam8').val(suggestion.data.ogrn);
+          $('#cParam16').val(suggestion.data.name.full_with_opf);
+          $('#cParam15').val(shortName);
+
+      } else {
+          shortNameArray = suggestion.data.management.name.split(' ');
+          shortName = shortNameArray[0] + " " + shortNameArray[1].substr(0,1) + ". " + shortNameArray[2].substr(0,1) + ".";
+
+          $('#cParam2').val(suggestion.value);
+          $('#cParam3').val(suggestion.data.name.full_with_opf);
+          $('#cParam4').val(suggestion.data.address.value);
+          $('#cParam5').val(suggestion.data.address.value);
+          $('#cParam6').val(suggestion.data.inn);
+          $('#cParam7').val(suggestion.data.kpp);
+          $('#cParam8').val(suggestion.data.ogrn);
+          $('#cParam16').val(suggestion.data.management.post + " " + suggestion.data.management.name);
+          $('#cParam15').val(shortName);
+
+      }
+  }
+});
+
+    $("#cParam11").suggestions({
+        token: "bd494950ed1bef112081b5328ec4edea63de8406",
+        type: "BANK",
+        count: 5,
+        /* Вызывается, когда пользователь выбирает одну из подсказок */
+        onSelect: function(suggestion) {
+            $('#cParam12').val(suggestion.data.correspondent_account);
+            $('#cParam13').val(suggestion.data.bic);
+        }
+    });
+</script>
+
+{% endblock %}

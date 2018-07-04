@@ -1,0 +1,185 @@
+{% extends "main.html" %}
+{% block content %}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Collocation</h1>
+      </div>    <!-- Breadcrumb -->
+      <div class="col-sm-6">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb float-sm-right">
+            <li class="ajax breadcrumb-item"><a href="/home">Главная</a></li>
+            <li class="breadcrumb-item"><a href="/#">Услуги</a></li>
+            <li class="breadcrumb-item active">Collocation</li>
+          </ol>
+        </nav>
+      </div>    <!-- Breadcrumb end-->
+    </div>
+  </div>
+</section><!-- ./Content Header (Page header) -->
+<!-- ./Content Header (Page header) -->
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fa fa-list"></i>
+              Размещенное оборудование
+            </h3>
+          </div><!-- /.box-header -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Стойка</label>
+                <select id="selectRack" class="form-control input-sm" style="font-family: FontAwesome; font-size: 1em;">
+                  <option value="" selected>All</option>
+                  {% for rack in json_racks_all %}
+                  {% if rack.deviceId == rackId %}
+                  <option selected value="&rackId={{rack.deviceId}}">{{rack.title}}</option>
+                  {% else %}
+                  <option value="&rackId={{rack.deviceId}}">{{rack.title}}</option>
+                  {% endif %}
+                  {% endfor %}
+                </select>
+              </div><!-- /.col-md-6 -->
+              <div class="col-md-6">
+                <label>Дата размещения</label>
+                <div class="input-group" style="margin-left: 4px;">
+                  <div class="input-group-btn">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default btn-sm">
+                        <i class="fa fa-arrow-circle-left" style="font-size: 1.2em;"></i>
+                      </button>
+                    </div>
+                    <div class="btn-group" style="margin: 0px 3px 0px 3px">
+                      <button id="dateSelect" type="button" class="btn btn-default btn-sm" value="{{periodVal}}">
+                        <i class="fa fa-fw fa-calendar"></i>
+                        {{periodVal}}
+                      </button>
+                      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>                   
+                      </button>
+                      <ul class="dropdown-menu selectedPeriod" role="menu">
+                        <li><a id="selectWeek">Неделя</a></li>
+                        <li><a id="selectMonth">Месяц</a></li>
+                        <li><a id="selectYear">Год</a></li>
+                        <li><a id="selectAll">Все даты</a></li>
+                      </ul>
+                    </div>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-default btn-sm">
+                        <i class="fa fa-arrow-circle-right" style="font-size: 1.2em;"></i>
+                      </button>
+                    </div>                 
+                  </div>
+                </div>
+              </div><!-- /.col-md-6 -->
+            </div><!-- /. row -->            
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <label>Список размещенного оборудования</label>
+                <div class="table-responsive">
+                  <table id="tb_UnitsList" class="table  table-hover table-striped" style="font-size: 0.75em;">
+                    <thead>
+                      <tr>
+                        <th>Дата размещения</th>
+                        <th>Место установки</th>
+                        <th>Инвентарный номер</th>
+                        <th>Наименование</th>
+                        <th>Форм-фактор</th>
+                        <th>Серийный номер</th>
+                        <th>Потребление</th>
+                        <th>Примечание</th>
+                        <th>Действия</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for unit in json_units %}
+                      <tr id="trIndex{{forloop.counter}}">
+                        
+                        {% if unit.dateTo == Null %}
+                        <td>{{ unit.dateFrom|date:"d-m-Y" }}</td>
+                        {% else %}
+                        <td>{{ unit.dateFrom|date:"d-m-Y" }} / {{ unit.dateTo|date:"d-m-Y" }}</td>
+                        {% endif %}
+                        <td>{{ unit.title }}</td>
+                        <td>{{ unit.comment.0 }}</td>
+                        <td>{{ unit.comment.1 }}</td>                
+                        <td>{{ unit.comment.2 }}</td>
+                        <td>{{ unit.comment.3 }}</td>
+                        <td>{{ unit.comment.4 }}</td>
+                        <td>{{ unit.comment.5 }}</td>
+                        <td style="width: 56px">
+                          {% if unit.dateTo == Null %}
+                          <a href="#modalDlgParent" data-toggle="modal" style="margin-right: 0.7em;" onclick="callModalDlg('/collocation/editUnit','&unitId={{unit.id}}&trIndex={{forloop.counter}}');" title="Изменить">
+                            <i class="fa fa-edit"></i>
+                          </a>
+                          <a href="#removeUnit" data-toggle="modal" style="color: #dd4b39;" title="Удалить">
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                          {% else %}
+                          <a style="margin-right: 0.7em; color: #ccc; cursor: default;" title="Изменить"><i class="fa fa-edit"></i></a>
+                          <a style="color: #ccc; cursor: default;"><i class="fa fa-trash-o" title="Удалить"></i></a>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div><!-- /.table-responsive -->
+              </div><!-- /.col-md-6 -->
+            </div><!-- /.row -->
+          </div><!-- box-body -->
+        </div><!-- box -->
+      </div><!-- /.col-md-12 -->
+    </div><!-- /.row -->
+  </div>
+</section>
+
+<script>
+  $('#dateSelect').datepicker({format: "dd-mm-yyyy", language: "ru"});
+  $("#dateSelect").on('changeDate', function() {
+   periodType = $.datepicker.formatDate("dd-mm-yy", $(this).datepicker('getDate'));
+   selectRack = $('#selectRack').val();
+   if (selectRack === undefined){
+     selectRack = '';
+   }
+	//$(this).datepicker('hide');
+	callPage('/collocation', true, '&periodType=' + periodType + '&currentDate=');
+});
+
+  $('.selectedPeriod>li>a').click(function() {
+   periodType = this.id;
+   periodVal = $('#dateSelect').val();
+   selectRack = $('#selectRack').val();
+   if (selectRack === undefined){
+     selectRack = '';
+   }
+   callPage('/collocation', true, '&periodType=' + periodType + '&currentDate=');
+ });
+
+  $('#tb_UnitsList').DataTable({
+    "dom": '<"top"i>rt<"bottom"flp><"clear">',
+    "paging": false,
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+    "lengthChange": false,
+    "searching": false,
+    "order": [[ 0, "desc" ]],
+    "info": false,
+    "autoWidth": false
+  });
+
+  $('#selectRack').on('change', function() {
+   callPage('/collocation', true, this.value);
+ });
+
+</script>
+{% endblock %}

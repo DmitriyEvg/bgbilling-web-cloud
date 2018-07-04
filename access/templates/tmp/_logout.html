@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+</section>
+
+<!-- ./Content Header (Page header) -->
+
+<!-- Main content -->
+<div class="row">
+    <div class="iframe-container">
+        <iframe id="iframeId" style="display: none"></iframe>
+    </div>
+</div>
+
+<script>
+    var iframeId = document.getElementById('iframeId');
+    iframeId.src="https://support.pudlink.ru/logout.php";
+    iframeId.onload = function() {
+	    iframeId.src="https://virtcloud.pudlink.ru/accounts/logout/";
+	      iframeId.onload = function() {
+    		window.location.replace("https://lkbilling.pudlink.ru/access/login/");
+    	    }
+    	}
+</script>
+
+{% endblock %}

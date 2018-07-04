@@ -1,0 +1,82 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Главная</h1>
+    <ol class="breadcrumb">
+        <li class="active"><i class="fa fa-dashboard"></i> Главная</li>
+    </ol>
+</section>
+
+<!-- ./Content Header (Page header) -->
+
+<!-- Main content -->
+<section class="content">
+<div class="row">
+    <div class="col-md-12">
+	<div class="box box-warning">
+    	    <div class="box-header with-border">
+		<i class="fa fa-ruble"></i>
+		<h3 class="box-title">Оплата и финансы</h3>
+		<div class="box-tools pull-right">
+            	    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        	</div><!-- /.box-tools -->
+	    </div><!-- /.box-header -->
+
+	    <div class="box-body no-padding">
+		<ul class="nav nav-stacked">
+		    <li><a href="#" class="ajax">Ваш баланс<span class="pull-right">{{ contractParams.balance }} руб.</span></a></li>
+		    <li><a href="/bill/detail" class="ajax">Детализация<span class="pull-right"><i class="fa fa-share"></i></span></a></li>
+            	    <li><a href="#proceedPaymant" data-toggle="modal">Пополнить счет<span class="pull-right"><i class="fa fa-ruble""></i></span></a></li>
+		</ul>
+	    </div><!-- /.box-body -->
+	</div><!-- /.box -->
+    </div><!-- /.col --> 
+    
+    <div class="col-md-12">
+	<div class="box box-success">
+    	    <div class="box-header with-border">
+		<i class="fa fa-user"></i>
+		<h3 class="box-title">Карточка клиента</h3>
+		<div class="box-tools pull-right">
+            	    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        	</div><!-- /.box-tools -->
+	    </div><!-- /.box-header -->
+
+	    <div class="box-body no-padding">
+		<ul class="nav nav-stacked">
+		    <li><a href="#">Имя<span class="pull-right">{{ contractParams.comment }}</span></a></li>
+		    <li><a href="#">Номер договор<span class="pull-right">{{ contractParams.title }}</span></a></li>
+		    <li><a href="#">Дата открытия договора<span class="pull-right">{{ contractParams.dateCreated }}</span></a></li>
+		    <li><a href="/home/dogovor.pdf">Скачать копию договора<span class="pull-right"><i class="fa fa-download"></i></span></a></li>
+		    <li><a href="#">E-mail <span class="pull-right">{{ contractParams.email }}</span></a></li>
+		</ul>
+	    </div><!-- /.box-body -->
+	</div><!-- /.box -->
+    </div><!-- /.col -->
+
+    <div class="col-md-12">
+	<div class="box box-info">
+    	    <div class="box-header with-border">
+		<i class="fa fa-info"></i>
+		<h3 class="box-title">Активные услуги</h3>
+		<div class="box-tools pull-right">
+            	    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        	</div><!-- /.box-tools -->
+	    </div><!-- /.box-header -->
+
+	    <div class="box-body no-padding">
+		<ul class="nav nav-stacked">
+		    {% for service in serviceList %}
+		    <li><a href="#" class="text-bold">{{ service.attrib.service }}<span class="pull-right">{{ service.attrib.col }}</span></a></li>
+		    {% endfor %}
+		</ul>
+	    </div><!-- /.box-body -->
+	</div><!-- /.box -->
+    </div><!-- /.col -->
+	
+</div><!-- /.row -->
+</section><!-- ./content -->
+
+{% endblock %}

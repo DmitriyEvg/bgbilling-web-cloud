@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'login_head.html' %}
+<body class="hold-transition register-page">
+    <div class="login-box" id="loginbox">
+      <div id="login-header"></div>
+      <div id="login-content">
+        {% block login_box %}
+        {% endblock %}
+      </div>
+      <div class="login-box-footer">ООО "Пудлинк" <a href="http://pudlink.ru">http://pudlink.ru</a></div>
+    </div>
+    <div id="modal-backdrop" class="modal-backdrop show" style="display: none;"></div>
+</body>
+</html>

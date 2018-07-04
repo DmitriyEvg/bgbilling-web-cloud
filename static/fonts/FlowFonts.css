@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "FlowRegular";
+    src: url("FlowRegular/FlowRegular.eot");
+    src: url("FlowRegular/FlowRegular.eot?#iefix")format("embedded-opentype"),
+    url("FlowRegular/FlowRegular.woff") format("woff"),
+    url("FlowRegular/FlowRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "FlowBold";
+    src: url("FlowBold/FlowBold.eot");
+    src: url("FlowBold/FlowBold.eot?#iefix")format("embedded-opentype"),
+    url("FlowBold/FlowBold.woff") format("woff"),
+    url("FlowBold/FlowBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}

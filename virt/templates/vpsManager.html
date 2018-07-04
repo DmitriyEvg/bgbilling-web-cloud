@@ -1,0 +1,512 @@
+{% extends "main.html" %}
+{% block content %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Виртуальные серверы</h1>
+            </div>    <!-- Breadcrumb -->
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="ajax breadcrumb-item"><a href="/home" >Главная</a></li>
+                        <li class="breadcrumb-item"><a href="/#" >Услуги</a></li>
+                        <li class="breadcrumb-item active">Виртуальные серверы</li>
+                    </ol>
+                </nav>
+            </div>    <!-- Breadcrumb end-->
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row"> <!-- табы первые--> 
+            <div class="col-md-6">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Серверы</a>              </li>
+                    <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Добавить сервер</a></li>
+                </ul>
+            </div>
+        </div><!-- конец табы первые-->
+        <div class="tab-content">
+            <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab"><!-- список виртуалок-->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="iframe-container">
+                            {% if request.session.contractChangeState = 'true' %}
+                            <iframe id="vps" allowfullscreen src="https://virtcloud.pudlink.ru/accounts/lklogin/"></iframe> 
+                            {% else %}
+                            <iframe id="vps" allowfullscreen src="https://virtcloud.pudlink.ru/instances/"></iframe>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><!-- добавить сервер-->
+                <div class="row mt-3">     
+                    <div class="col-md-12 col-xs-12">  
+                        <div class="card">
+                            <div class="card-header  p-1"><!-- хидер табов вторых-->
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <h3 class="card-title p-3">Выберите размер сервера</h3>
+                                    </div>
+                                    
+                                </div>   
+                            </div><!-- конец хидера вторых табов -->   
+                            <div class="card-body p-0"><!-- начало карточки контента табов конфигурации-->  
+                                <div class="row">
+                                    <div class="col-md-6 col-xs-12">
+                                        <ul class="nav nav-pills ml-auto p-3 ">
+                                            <li class="nav-item"><a class="nav-link active" href="#ready-config" data-toggle="tab">Готовые</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="#user-config" data-toggle="tab">Конфигуратор</a></li>
+                                        </ul>
+                                    </div>       
+                                </div> 
+                                <div class="tab-content ">
+                                    <div class="tab-content" id="myTabContent"><!-- начало контента первого таба готовые конфигурации -->
+                                        <div class=" tab-pane active" id="ready-config" >
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <table id="example2" class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="pr-0" style="width: 56px"></th>   
+                                                                <th class="pr-0">Процессоры</th>
+                                                                <th class="pr-0">Память</th>
+                                                                <th class="pr-0">SSD</th>
+                                                                <th class="pr-0">Цена</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio11" name="customRadio2" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio1"></label>
+                                                                </div></td>
+                                                                <td>4</td>
+                                                                <td>4</td>
+                                                                <td>50</td>
+                                                                <td>8000</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio11" name="customRadio2" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio1"></label>
+                                                                </div></td>
+                                                                <td>4</td>
+                                                                <td>8</td>
+                                                                <td>150</td>
+                                                                <td>16000</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio11" name="customRadio2" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio1"></label>
+                                                                </div></td>
+                                                                <td>8</td>
+                                                                <td>8</td>
+                                                                <td>250</td>
+                                                                <td>62000</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                              <th class="pr-0"></th>
+                                                              <th class="pr-0">Ядра</th>
+                                                              <th class="pr-0">GB</th>
+                                                              <th class="pr-0">GB</th>
+                                                              <th class="">Рублей в месяц</th>
+
+                                                          </tr>
+                                                      </tfoot>
+                                                  </table>
+
+                                              </div>
+                                          </div>
+                                      </div><!-- конец контента первого таба готовые конфигурации -->
+                                      <!-- конфигуратор сервера начало таба-->
+                                      <div class="tab-pane px-4" id="user-config">
+                                        <div class="row mb-1">
+                                            <label class="mb-2 col-12 ">Процессоры</label>
+                                            <div class="col-lg-8 col-xs-12  mt-3 pb-4">
+                                                <input type="range" id="js-amount-range1" value="1" min="1" max="40" step="1">
+                                            </div>    
+                                            <div class="col"> 
+                                                <div class="input-group ">
+                                                    <input type="number" class="form-control pr-0" id="js-amount-input1" value="1" min="1" max="40"></input>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">Ядер</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">     
+                                                <div class="input-group ">         
+                                                    <input class="form-control px-0" id="summ1"  value="400" disabled style="    background: none; border: none; text-align: right;"></input>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" style="border: none; background: none">руб</span>
+                                                    </div>
+                                                </div>                                                      
+                                            </div>
+                                        </div>  
+                                        <div class="row mb-2">                                               
+                                            <label class="mb-2 col-12">Оперативная память</label>
+                                            <div class="col-lg-8 col-xs-12 mt-3 pb-4">
+                                                <input type="range" id="js-amount-range2" value="1" min="1" max="128">
+                                            </div>
+                                            <div class="col">
+                                                <div class="input-group  pb-3">                                                               
+                                                    <input type="number" class="form-control pr-0" id="js-amount-input2" value="1" min="1" max="128"></input>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" >GB</span>
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                            <div class="col"> 
+                                                <div class="input-group  pb-3">
+                                                    <input class="form-control px-0" id="summ2" value="150" disabled style="    background: none; border: none; text-align: right;"></input>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" style="border: none; background: none">руб</span>
+                                                    </div>
+                                                </div>    
+                                            </div>   
+                                        </div> 
+                                        <div class="row mb-2">                                               
+                                            <label class="mb-2 col-12">Объем диска</label>
+                                            <div class="col-lg-8 col-xs-12 mt-3 pb-4">
+                                                <input type="range" id="js-amount-range3" value="1" min="1" max="900">
+                                            </div>
+                                            <div class="col">   
+                                                <div class="input-group">     
+                                                    <input type="number"  class="form-control pr-0" id="js-amount-input3" value="1" min="1" max="900"></input>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">GB</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="input-group pb-3">                                                                            
+                                                    <input class="form-control px-0" id="summ3" value="20" disabled  style="    background: none; border: none; text-align: right;"></input>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" style="border: none; background: none">руб</span>
+                                                    </div>
+                                                </div>  
+                                            </div>    
+                                        </div> <!-- конфигуратор сервера конец таба-->
+                                        <div class="row mb-2" >
+                                            <div class="col-12 text-sm-right">
+                                                <label class="d-block ">Сумма:</label>
+                                                <input class="d-inline px-0" id="summ" value="515"  style="background: none; border: none; text-align: right; font-weight: 700" disabled></input>
+                                                <span class="d-inline" style="padding: 0.375rem 0.75rem; ">руб</span>
+                                            </div>                                                              
+                                        </div>                    
+                                    </div><!-- конфигуратор сервера конец таба-->
+                                </div>       
+                            </div> 
+                        </div>                         
+                        <div class="card-header  p-1"><!-- хидер табов вторых--><!-- образ ОС --> 
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <h3 class="card-title p-3">Выберите Образ</h3>
+                                </div>                                
+                            </div>   
+                        </div><!-- конец хидера табов ОС-->   
+                        <div class="card-body mb-2 p-0"><!-- начало карточки контента табов ОС-->  
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <ul class="nav nav-pills ml-auto p-3">
+                                        <li class="nav-item"><a class="nav-link active" href="#os" data-toggle="tab">ОС</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#app" data-toggle="tab">Приложения</a></li>
+                                    </ul>
+                                </div> 
+                            </div>
+                            <div class="tab-content" id="myTabContent">
+                                <div class=" tab-pane active" id="os" ><!-- начало контента первого таба ОС -->
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            <table class="table  table-hover m-0">
+                                                <tbody>
+                                                    <thead>
+                                                        <th style="width: 56px"></th>
+                                                        <th>ОС</th>
+                                                        <th>Версия</th>
+                                                    </thead>
+                                                    <form>
+                                                        <tr>
+                                                            <td>    
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio1"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Ubuntu</td>
+                                                            <td>16.04.4 x64</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>    
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio2"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Ubuntu</td>
+                                                            <td>16.04.4 x64</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>    
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio3"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Ubuntu</td>
+                                                            <td>16.04.4 x64</td>
+                                                        </tr>
+                                                    </form>
+                                                </tbody>
+                                            </table><!-- /.card-body -->
+                                            <!-- /.card готовые конфигурации -->
+                                        </div>
+                                    </div>
+                                </div><!-- конец контента первого таба ОС -->
+                                <!-- ОС приложения начало таба-->
+                                <div class="tab-pane" id="app" >
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            <table class="table table-hover m-0">
+                                                <tbody>
+                                                    <thead>
+                                                        <th style="width: 56px"></th>
+                                                        <th>Приложение</th>
+                                                        <th>ОС</th>
+                                                    </thead>
+                                                    <form>
+                                                        <tr>
+                                                            <td>    
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio1"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Wordpress</td>
+                                                            <td>Ubuntu</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>    
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio2"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>Minecraft</td>
+                                                            <td>Linux</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>    
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="customRadio3"></label>
+                                                                </div>
+                                                            </td>
+                                                            <td>1C Бухгалтерия</td>
+                                                            <td>Ubuntu</td>
+                                                        </tr>
+                                                    </form>
+                                                </tbody>
+                                            </table><!-- /.card-body -->
+                                        </div>
+                                    </div>        
+                                </div> <!-- ОС приложения конец таба-->
+                            </div>
+                        </div>
+                        <div class="card-header  p-1 ">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12">
+                                    <h3 class="card-title p-3">Итого</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body mb-2">
+                            <div class="row">
+                                <div class="col-md-8 col-xs-12 pb-3 pb-sm-0  ">
+                                    <div class="col">
+                                        <span class="text-primary lead font-weight-bold">800 руб</span><span> к оплате за </span> <span> Март </span>
+                                    </div>
+                                    <div class="col">
+                                        <input class="d-inline px-0" id="summtotal" value="570" disabled  style="    background: none; border: none; "></input>
+                                        <span class="d-inline " style="border: none; background: none;"> в месяц</span> 
+                                    </div>                                                                              
+                                </div>
+                                <div class="col-md-4 col-xs-12">
+                                    <button type="button" class="btn btn-lg btn-block btn-primary float-right">Запустить</button>
+                                </div>
+                            </div>                                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>
+</section><!-- Main content -->
+
+
+
+<script>
+    var iframe = document.getElementById("vps");
+    iframe.onload = function() {
+       document.domain = "pudlink.ru";
+       var innerDoc = (iframe.contentWindow || iframe.contentDocument);
+       if (innerDoc.document)innerDoc = innerDoc.document;
+
+       var username = innerDoc.getElementById("virtUser");
+       var userpass = innerDoc.getElementById("virtPswd");
+       var submit = innerDoc.getElementById("virtSubmit");
+       if (username != null && userpass != null ) {
+           username.value = '{{ username }}';
+           userpass.value = '{{ password }}';
+           submit.click();
+       }
+    //iframe.onload = null;
+}
+var $rangeslider1 = $('#js-amount-range1');
+var $amount1 = $('#js-amount-input1');
+var $handle1;
+
+$rangeslider1
+.rangeslider({
+    polyfill: false,
+    onInit: function() {
+      $handle1 = $('.rangeslider__handle', this.$range);
+      updateHandle($handle1[0], this.value);
+  }
+})
+.on('input', function() {
+    $amount1[0].value = this.value;
+    updateHandle($handle1[0], this.value)
+});
+
+$amount1.on('input', function() {
+  $rangeslider1.val(this.value).change();
+});
+
+var $rangeslider2 = $('#js-amount-range2');
+var $amount2 = $('#js-amount-input2');
+var $handle2;
+
+$rangeslider2
+.rangeslider({
+    polyfill: false,
+    onInit: function() {
+      $handle2 = $('.rangeslider__handle', this.$range);
+      updateHandle($handle2[0], this.value);
+  }
+})
+.on('input', function() {
+    $amount2[0].value = this.value;
+    updateHandle($handle2[0], this.value)
+});
+
+$amount2.on('input', function() {
+  $rangeslider2.val(this.value).change();
+});
+
+var $rangeslider3 = $('#js-amount-range3');
+var $amount3 = $('#js-amount-input3');
+var $handle3;
+
+$rangeslider3
+.rangeslider({
+    polyfill: false,
+    onInit: function() {
+      $handle3 = $('.rangeslider__handle', this.$range);
+      updateHandle($handle3[0], this.value);
+  }
+})
+.on('input', function() {
+    $amount3[0].value = this.value;
+    updateHandle($handle3[0], this.value)
+});
+
+$amount3.on('input', function() {
+  $rangeslider3.val(this.value).change();
+});
+function updateHandle(el, val) {
+	el.textContent = " " + val + " ";
+
+	var forsum1 = document.getElementById("js-amount-range1"); 
+	var total1 = forsum1.value * 600;
+	document.getElementById("summ1").value=total1;
+	
+	var forsum2 = document.getElementById("js-amount-range2"); 
+	var total2 = forsum2.value * 270;
+	document.getElementById("summ2").value=total2;
+	
+	var forsum3 = document.getElementById("js-amount-range3"); 
+	var total3 = forsum3.value * 28;
+	document.getElementById("summ3").value=total3;
+	
+	total();
+}
+
+
+$('.table tbody tr').click(function(event) {
+  if (event.target.type !== 'radio') {
+    $(':radio', this).trigger('click');
+}
+});
+
+// $(function () {
+//     // save the selected index
+//     var index = $('[name="radioGroup"]:checked').parents('tr').index();
+
+//     // init table and check the index row
+//     $('#example2').bootstrapTable().bootstrapTable('check', index);
+
+//     // click button to get selected row.    
+//     $('#btn').click(function () {
+//         console.log($('#example2').bootstrapTable('getSelections')[0]);
+//     });
+// });
+
+
+/*
+function calculator1() {
+	
+	var forsum1 = document.getElementById("js-amount-range1"); 
+	var total1 = forsum1.value * 600;
+	document.getElementById("summ1").value=total1;
+	total()
+}
+
+function calculator2() {
+	var forsum2 = document.getElementById("js-amount-range2"); 
+	var total2 = forsum2.value * 270;
+	document.getElementById("summ2").value=total2;
+	total()
+}
+
+function calculator3() {
+	var forsum3 = document.getElementById("js-amount-range3"); 
+	var total3 = forsum3.value * 28;
+	document.getElementById("summ3").value=total3;
+	total()
+}
+*/
+
+function total() {
+	var summ1 = document.getElementById("summ1"); 
+	var summ2 = document.getElementById("summ2"); 
+	var summ3 = document.getElementById("summ3"); 
+	var total = (+summ1.value) + (+summ2.value) + (+summ3.value);
+	document.getElementById("summ").value=total;
+	document.getElementById("summtotal").value=total;
+}
+
+</script> 
+
+
+
+
+{% endblock %}

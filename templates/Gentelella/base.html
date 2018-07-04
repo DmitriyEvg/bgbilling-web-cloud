@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+{% include 'head.html' %}
+    <body class="nav-md ">
+	<div class="container body">
+	    <div class="main_container">
+	        <div class="col-md-3 left_col">
+		    {% include 'sidebar.html' %}
+
+		    <div class="top_nav">
+			{% include 'topbar.html' %}
+		    </div>
+
+		    <div id="content-wrapper" class="right_col" role="main">
+			{% block content %}
+			{% endblock %}
+	    	    </div>
+
+        	{% include 'modals.html' %}
+        	{% include 'footer.html' %}
+
+	    </div>
+	</div>
+	{% include 'scripts.html' %}
+    </body>
+</html>

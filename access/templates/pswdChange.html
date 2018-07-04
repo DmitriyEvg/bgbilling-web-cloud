@@ -1,0 +1,58 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Смена пароля</h1>
+      </div>    <!-- Breadcrumb -->
+      <div class="col-sm-6">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb float-sm-right">
+            <li class="ajax breadcrumb-item"><a href="/home" >Главная</a></li>
+            <li class="breadcrumb-item"><a href="/#" >Аккаунт</a></li>
+            <li class="breadcrumb-item active">Смена пароля</li>
+          </ol>
+        </nav>
+      </div>    <!-- Breadcrumb end-->
+    </div>
+  </div>
+</section>
+<!-- ./Content Header (Page header) -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">   
+        <div class="card">
+          <div class="card-body">
+            <form  method="post">{% csrf_token %}
+              <div class="form-group">
+                <label for="password">Новый пароль</label>
+                <input id="password" type="password" name="secret" class="form-control" readonly 
+                onfocus="this.removeAttribute('readonly')"
+                onblur="this.readOnly = true"
+                placeholder="Укажите новый пароль">
+                <input type="hidden" name="sendPswd" value="true">
+              </div><!-- /.box-body -->             
+            </div> 
+            <div class="card-footer">
+              <label class="text-{{ typeMsg }}">{{ formMsg }}</label>
+              <button type="submit" class="btn btn-default float-right" formaction="/access/pswdChange/">Сохранить</button>
+            </div>
+          </div>   
+        </form>
+      </div>
+    </div>
+  </div>
+</section >      
+<!-- Main content -->
+
+
+<script type="text/javascript">
+  $('#password').password();
+</script>
+
+
+{% endblock %}

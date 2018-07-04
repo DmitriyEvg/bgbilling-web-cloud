@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Личный кабинет |  Login </title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="{% static "vendors/bootstrap/dist/css/bootstrap.min.css" %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static "vendors/font-awesome/css/font-awesome.min.css" %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static "dist/css/ionicons.min.css" %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static "dist/css/AdminLTE.css" %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static "vendors/iCheck/square/blue.css" %}">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+  <script src="{% static "plugins/input-mask/jquery.mask.min.js" %}"></script>  
+  
+</head>
+
+<body class="hold-transition register-page">
+<div class="login-box">
+  <div class="login-logo-img" style="background: url('https://lkbilling.pudlink.ru/static/img/linux-vps.png') no-repeat 0 0; height: 8em; background-size: contain;"/></div>
+    {% if typeForm == "Login" or typeForm == "Logout" %}
+    <div class="login-box-body">
+      <h4 class="login-box-msg">Вход в личный кабинет</h4>
+	  <div><a href="register.html" class="text-right block">Зарегистрироваться</a></div>
+      <form id="formLogin" action="../../index2.html" method="post">
+        <div class="form-group has-feedback">
+          <input type="email" class="form-control" placeholder="Email" name="username">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="Password" name="password">
+          <span style="position: absolute;top: 0px;" class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+	    <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+        </div>
+      </form>
+	  <div class="clear-line"></div>
+      <a href="#">Восстановить доступ к аккаунту</a><br>
+    </div>	  
+    {% endif %}
+
+    {% if typeForm == "accountCreate" %}
+    {% endif %}          
+
+    {% if typeForm == "codeAccess" %}
+	{% endif %}
+	  
+	{% if typeForm == "Requisite" %}
+    {% endif %}
+
+    <div class="login-box-footer">ООО "Пудлинк" <a href="http://pudlink.ru">http://pudlink.ru</a></div>
+  </div>  
+
+    {% if typeForm == "Logout" %}
+    <!-- Block logout -->  
+    <div class="row">
+      <div class="iframe-container">
+        <iframe id="iframeId" style="display: none"></iframe>
+      </div>
+    </div>
+
+    <script>
+      var iframeId = document.getElementById('iframeId');
+      iframeId.src="https://support.pudlink.ru/logout.php";
+      iframeId.onload = function() {
+      iframeId.src="https://virtcloud.pudlink.ru/accounts/logout/";
+        iframeId.onload = function() {
+          window.history.pushState("","", '/access/login/');
+          }
+      }
+    </script>
+    <!--./Block logout -->
+    {% endif %}
+
+  </div>
+</body>
+</html>

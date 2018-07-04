@@ -1,0 +1,485 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Личный кабинет |  Login </title>
+  
+    <!-- Bootstrap -->
+    <link href="{% static "vendors/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static "vendors/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static "vendors/nprogress/nprogress.css" %}" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="{% static "vendors/bootstrap-daterangepicker/daterangepicker.css" %}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{% static "vendors/iCheck/skins/flat/green.css" %}" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="{% static "vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" %}" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="{% static "vendors/jqvmap/dist/jqvmap.min.css" %}" rel="stylesheet"/>
+     
+    <!-- Animate.css -->
+    <link href="{% static "vendors/animate.css/animate.min.css" %}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{% static "build/css/custom.css" %}" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+	<script src="{% static "plugins/input-mask/jquery.mask.min.js" %}"></script>
+    
+	<!-- DaData -->
+	<link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.5.0/dist/css/suggestions.min.css" type="text/css" rel="stylesheet" />
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.5.0/dist/js/jquery.suggestions.min.js"></script>
+	
+  </head>
+
+<body class="login">
+  <div>
+
+    <div class="login_wrapper">
+
+      {% if typeForm == "Login" or typeForm == "Logout" %}
+      <div class="animate form login_form">
+        <section id="loginContent" class="login_content">          
+          <form id="formValidation" action="/access/auth/" method="post">{% csrf_token %}
+            <h1><i class="fa fa-server"></i> Личный кабинет</h1>
+            
+            <div style="text-align: right; padding-bottom: 1em;">
+              <a  style="font-size:1.1em;color:#337ab7; text-decoration:none;" href="/access/accountCreate/">Зарегестрироваться</a>
+            </div>
+            
+    	    <div class="form-group has-feedback">
+    	        <input class="form-control" placeholder="Email" type="email" name="username">
+    	        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    	        <label id="username-error" class="error valid" for="username">{{ errorLogin }}</label>
+	    </div>
+    	    
+    	    <div class="form-group has-feedback">
+    	      <input class="form-control" placeholder="Password" type="password" name="password">
+    	      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    	      <label id="password-error" class="error valid" for="password">{{ errorPassword }}</label>
+    	    </div>
+    	    
+            <div>
+              <button type="submit" class="btn btn-primary btn-block">Войти</button>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="separator">
+              <div class="clearfix"></div>
+              <div>
+                <p><strong>ООО "Пудлинк" <a href="http://pudlink.ru">http://pudlink.ru</a></strong></p>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+      {% endif %}
+
+      {% if typeForm == "accountCreate" %}
+      <div class="animate form login_form">
+        <section id="loginContent" class="login_content">                    
+          <form id="formValidation" action="/access/register/" method="post">{% csrf_token %}
+            <h1><i class="fa fa-server"></i> Личный кабинет</h1>
+			<h2>Регистрация</h2>
+    	    <div class="form-group has-feedback">
+    	        <input class="form-control" placeholder="Email" type="email" name="username">
+    	        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    	        <label id="username-error" class="error valid" for="username">{{ errorMsg }}</label>
+	    </div>
+    	    
+    	    <div class="form-group has-feedback">
+    	      <input class="form-control" placeholder="Password" type="password" name="password">
+    	      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    	      <label id="password-error" class="error valid" for="password"></label>
+    	    </div>            
+            
+            
+            <div>
+              <button type="submit" class="btn btn-primary btn-block">Зарегестрироваться</button>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="separator">
+              <div style="text-align: center; padding-bottom: 1em;">Аккаунт существет ?
+                <a href="/access/login/" style="font-size:1.1em;color:#337ab7; text-decoration:none;"> Вход </a>
+              </div>
+
+              <div class="clearfix"></div>
+              <br />
+
+              <div>
+                <h1><i class="fa fa-key"></i><strong> Pudlink LTD</h1>
+                <p><strong>ООО "Пудлинк" <a href="http://pudlink.ru">http://pudlink.ru</a></strong></p>
+              </div>
+            </div>
+          </form>
+        </section>
+      </div>
+      {% endif %}          
+
+      {% if typeForm == "codeAccess" %}
+	  <!-- Форма проверки кода-->
+      <div id="step1" class="register_step1 form">
+        <section class="login_content">          	
+		  <form id="formStep1" class="form-horisontal" action="/access/requisite/" method="post">{% csrf_token %}
+            <h1><i class="fa fa-server"></i> Личный кабинет</h1>
+			<div style="text-align:left;height: 6em;">
+              <span>
+			  На указанный email <span style="color:#0089ff;">{{ userName }}</span> было отправлено письмо с кодом подтверждения.
+			  Для продолжения, необходимо ввести полученный код в поле ввода.
+			  </span>
+			</div>
+            <div class="form-group" style="height: 4em;">
+              <input type="text" class="form-control" placeholder="Код подтверждения" required="" name="codeAccess" />
+              <label id="codeAccess-error" class="error valid" for="codeAccess">{{ errorMsg }}</label>
+            </div>
+			<div style="text-align:left;"><a href="/access/register/?codeAccess=refresh">Отправить код повторно <i class="fa  fa-refresh"></i></a></div>
+            <div class="separator">
+			  <a class="pull-left" href="/access/accountCreate/">Назад</a>
+              <input type="submit" class="btn btn-primary submit pull-right" value="Далее" />
+            </div>
+		  </form>
+        </section>
+      </div>
+	  <script>
+	    // Валидация формы step1
+	    $( "#formStep1" ).validate({
+		  submitHandler: function(form) {
+		  form.submit();
+		  },
+		  rules: {codeAccess: "required"},messages: {codeAccess: "Необходимо ввести код подтверждения"}
+	    });
+	  </script>
+	  {% endif %}
+	  
+	  {% if typeForm == "Requisite" %}
+	  <!-- Форма регистрации ШАГ №2 -->
+      <div id="step2" class="register_step2">
+        <section class="login_content">
+		<form id="formStep2">
+            <h1><i class="fa fa-server"></i> Личный кабинет</h1>
+            <div class="form-group">
+              <div style="text-align:left;"><label>Тип аккаунта</label></div>
+              <div class="radio" style="text-align:left;"><label><input type="radio" name="typeClient" value="1">физическое лицо</label></div>
+              <div class="radio" style="text-align:left;"><label><input type="radio" name="typeClient" value="2">юридическое лицо</label></div>
+              <div class="radio" style="text-align:left;"><label><input type="radio" name="typeClient" value="3">ИП</label></div>
+              <div class="radio" style="text-align:left;height:2em;">
+                <label style="width:100%;">
+                  <input type="radio" name="typeClient" value="4" disabled>Гос.учреждение
+                  <label id="typeClient-error" class="error" for="typeClient"></label>
+                </label>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="separator">
+              <div class="checkbox" style="text-align:left;height: 4em;"><label><input type="checkbox" name="submit1">
+              Я ознакомился(-ась) и согласен(-на) с условиями 
+              <a style="color: #0093ff;text-decoration: none;" href="#">Договора об оказании услуг связи</a><label id="submit1-error" class="error" for="submit1"></label>
+              </label></div>
+              <div class="clearfix"></div>
+              <div class="checkbox" style="text-align:left;height: 9em;"><label><input type="checkbox" name="submit2">
+              Я ознакомился(-ась) <a style="color: #0093ff;text-decoration: none;" href="#">с Политикой в отношении обработки 
+              и защиты персональных данных</a> и даю свое Согласие на 
+              обработку персональных данных в соответствии с 
+              Законом "О персональных данных" №152-ФЗ от 27.07.2006 года
+              <label id="submit1-error" class="error" for="submit2"></label>
+              </label></div>
+			</div>
+            <div class="separator">
+              <input type="submit" class="btn btn-primary pull-right" value="Далее">
+            </div>
+		</form>
+        </section>
+      </div>	
+      
+	  <!-- Форма регистрации ШАГ №3 -->
+      <div id="step3" class="register_step3 form">
+        <section class="login_content">          	
+		  <form id="formStep3" class="form-horisontal" action="/access/wellcome/" method="post" >{% csrf_token %}
+            <h1><i class="fa fa-server"></i> Личный кабинет</h1>
+            <div id="formStep3-group" class="form-group">
+			</div>
+			<div class="separator">
+				<button id="prevStep2" type="button" class="btn btn-default pull-left">Назад</button>
+				<input type="submit" class="btn btn-primary submit pull-right" value="Готово">
+            </div>
+		  </form>
+        </section>
+      </div>	      
+      
+      <script>
+      
+      // pevBack
+      $("#prevStep2").click(function() {
+        //$("#step1").css({ "display": "none"});
+        $("#step2").css({ "display": "block"});
+        $("#step3").css({ "display": "none"});
+      });
+      
+      // Валидация формы step2
+      $( "#formStep2" ).validate({
+        submitHandler: function(form) {
+		  $("#formStep3-group").empty();
+		
+  		  // Определяем тип аккаунта
+	      var clientType = $("#formStep2 input:radio:checked").val();
+
+		  // Формирование полей и валидации форм для физ.лиц
+		  if (clientType == 1) {
+			$("#formStep3-group").append('\
+				<div style="height: 5em;">\
+				    <input type="text" class="form-control" placeholder="Имя" required="" name="firstName">\
+				    <label id="firstName-error" class="error valid" for="firstName"></label>\
+				</div>\
+				<div style="height: 5em;">\
+				    <input type="text" class="form-control" placeholder="Фамилия" required="" name="lastName">\
+				    <label id="lastName-error" class="error valid" for="lastName"></label>\
+				</div>\
+				<div style="height: 5em;">\
+				    <input id="phoneNumber" type="phone" class="form-control" placeholder="Телефон" required="" name="phoneNumber">\
+				    <label id="phoneNumber-error" class="error valid" for="phoneNumber"></label>\
+				</div>\
+				<input type="hidden" name="accountType" value="type1">\
+			');
+			// Подключение маски для поля тлф.
+			$("#phoneNumber").mask("+7(999) 999-9999");
+
+			// Валидация формы step3 для физ.лиц
+			$( "#formStep2" ).validate({
+				submitHandler: function(form) {
+					//$("#step1").css({ "display": "none"});
+					$("#step2").css({ "display": "none"});
+					$("#step3").css({ "display": "block"});
+				},
+				rules: {
+					phoneNumber: "required",
+					firstName: "required",
+					lastName: "required"
+				}
+			});
+		}
+		
+		  // Формирование полей и валидации форм для юр.лиц
+		  if (clientType == 2) {
+			$("#formStep3-group").append('\
+				<div style="height: 5em;">\
+					<input id="party" name="party" class="form-control suggestions-input" placeholder="Введите название, ИНН или адрес" autocomplete="off" style="box-sizing: border-box;" type="text">\
+				</div>\
+				<div style="height: 5em;">\
+					<input id="cParam11" name="cParam11" class="form-control" placeholder="Банк">\
+					<label id="cParam11-error" class="error valid" for="cParam11"></label>\
+				</div>\
+				<div style="height: 5em;">\
+					<input id="cParam10" name="cParam10" class="form-control" placeholder="Расчетный счет">\
+					<label id="cParam10-error" class="error valid" for="cParam10"></label>\
+				</div>\
+				<div style="height: 5em;">\
+					<input id="cParam9" name="cParam9" class="form-control" placeholder="Контактный телефон">\
+					<label id="cParam9-error" class="error valid" for="cParam9"></label>\
+				</div>\
+				<input type="hidden" id="cParam2" name="cParam2" class="form-control" placeholder="Краткое наименование предприятия">\
+				<input type="hidden" id="cParam3" name="cParam3" class="form-control" placeholder="Полное наименование предприятия">\
+				<input type="hidden" id="cParam4" name="cParam4" class="form-control" placeholder="Юридический адрес">\
+				<input type="hidden" id="cParam5" name="cParam5" class="form-control" placeholder="Почтовый адрес">\
+				<input type="hidden" id="cParam6" name="cParam6" class="form-control" placeholder="ИНН">\
+				<input type="hidden" id="cParam7" name="cParam7" class="form-control" placeholder="КПП">\
+				<input type="hidden" id="cParam8" name="cParam8" class="form-control" placeholder="ОГРН">\
+				<input type="hidden" id="cParam16" name="cParam16" class="form-control" placeholder="Должность и полное Ф.И.О. уполномоченного лица">\
+				<input type="hidden" id="cParam14" name="cParam14" class="form-control" placeholder="Должность и полное Ф.И.О. уполномоченного лица (в род. падеже)Краткое Ф.И.О уполномоченного лица">\
+				<input type="hidden" id="cParam15" name="cParam15" class="form-control" placeholder="Краткое Ф.И.О уполномоченного лица">\
+				<input type="hidden" id="cParam12" name="cParam12" class="form-control" placeholder="Корреспондентский счет">\
+				<input type="hidden" id="cParam13" name="cParam13" class="form-control" placeholder="БИК">\
+				<input type="hidden" name="accountType" value="type2">\
+			');
+	
+			// Подключение маски для поля тлф.
+			$("#cParam9").mask("+7(999) 999-9999");
+			
+			// Подключение DaData поле ИНН
+			$("#party").suggestions({
+				token: "bd494950ed1bef112081b5328ec4edea63de8406",
+				type: "PARTY",
+				count: 5,
+				/* Вызывается, когда пользователь выбирает одну из подсказок */
+				onSelect: function(suggestion) {
+					dataType = suggestion.data.type
+					if (dataType == "INDIVIDUAL"){
+						shortNameArray = suggestion.value.split(' ');
+						shortName = shortNameArray[1] + " " + shortNameArray[2].substr(0,1) + ". " + shortNameArray[3].substr(0,1) + ".";
+
+						$('#cParam2').val(suggestion.value);
+						$('#cParam3').val(suggestion.data.name.full_with_opf);
+						$('#cParam4').val(suggestion.data.address.value);
+						$('#cParam5').val(suggestion.data.address.value);
+						$('#cParam6').val(suggestion.data.inn);
+						$('#cParam7').val("");
+						$('#cParam8').val(suggestion.data.ogrn);
+						$('#cParam16').val(suggestion.data.name.full_with_opf);
+						$('#cParam15').val(shortName);
+		
+					} else {
+						shortNameArray = suggestion.data.management.name.split(' ');
+						shortName = shortNameArray[0] + " " + shortNameArray[1].substr(0,1) + ". " + shortNameArray[2].substr(0,1) + ".";
+
+						$('#cParam2').val(suggestion.value);
+						$('#cParam3').val(suggestion.data.name.full_with_opf);
+						$('#cParam4').val(suggestion.data.address.value);
+						$('#cParam5').val(suggestion.data.address.value);
+						$('#cParam6').val(suggestion.data.inn);
+						$('#cParam7').val(suggestion.data.kpp);
+						$('#cParam8').val(suggestion.data.ogrn);
+						$('#cParam16').val(suggestion.data.management.post + " " + suggestion.data.management.name);
+						$('#cParam15').val(shortName);
+					}
+				}
+			});
+			
+			// Подключение DaData поле Банк
+			$("#cParam11").suggestions({
+				token: "bd494950ed1bef112081b5328ec4edea63de8406",
+				type: "BANK",
+				count: 5,
+				/* Вызывается, когда пользователь выбирает одну из подсказок */
+				onSelect: function(suggestion) {
+					$('#cParam12').val(suggestion.data.correspondent_account);
+					$('#cParam13').val(suggestion.data.bic);
+				}
+			});
+	
+			// Валидация формы step3 для юр.лиц
+			$( "#formStep3" ).validate({
+				submitHandler: function(form) {
+					form.submit();
+				},
+				rules: {
+					party: "required",
+					cParam9: "required",cParam10: "required",cParam11: "required"
+				},
+				messages: {
+					party: "Поле обязательно для заполнения",
+					cParam9: "Поле обязательно для заполнения",
+					cParam10: "Поле обязательно для заполнения",
+					cParam11: "Поле обязательно для заполнения"
+				}
+			});
+		}
+		
+        //$("#step1").css({ "display": "none"});
+        $("#step2").css({ "display": "none"});
+        $("#step3").css({ "display": "block"});
+      },
+        rules: {
+          typeClient: "required",
+          submit1: "required",
+          submit2: "required"
+          },
+         messages: {
+          typeClient: "Необходимо выбрать тип аккаунта",
+          submit1: "Необходимо дать согласие",
+          submit2: "Необходимо дать согласие"
+          }
+      });
+      </script>
+    {% endif %}
+
+    </div>
+    
+
+    {% if typeForm == "Logout" %}
+    <!-- Block logout -->  
+    <div class="row">
+      <div class="iframe-container">
+        <iframe id="iframeId" style="display: none"></iframe>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var iframeId = document.getElementById('iframeId');
+    iframeId.src="https://support.pudlink.ru/logout.php";
+    iframeId.onload = function() {
+    iframeId.src="https://virtcloud.pudlink.ru/accounts/logout/";
+      iframeId.onload = function() {
+        window.history.pushState("","", '/access/login/');
+        }
+    }
+  </script>
+  <!--./Block logout -->
+  {% endif %}
+
+
+  <!-- Style for error messages elements -->
+  <style type="text/css">
+  #username-error, #password-error,
+  #firstName-error, #lastName-error,
+  #codeAccess-error
+  {
+      color: #e34c4c;
+      width: 100%;
+      position: relative;
+      top: -20px;
+      font-weight: normal;
+  }
+  
+  #typeClient-error, 
+  #submit1-error, #submit2-error, #phoneNumber-error,
+  #cParam2-error, #cParam3-error, #cParam4-error, #cParam5-error,
+  #cParam6-error, #cParam7-error, #cParam8-error, #cParam9-error,
+  #cParam10-error, #cParam11-error, #cParam12-error, #cParam13-error,
+  #cParam14-error, #cParam15-error, #cParam16-error
+  {
+    color: #e34c4c;
+    width: 100%;
+    font-weight: normal;
+    text-align: center;
+    padding: 0;
+  }
+  
+  </style>
+  <!--./Style-->
+
+  <script>
+    // Валидация форм
+    jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid"
+    });
+
+    // Валидация формы входа
+    $( "#formValidation" ).validate({
+      submitHandler: function(form) {
+        form.submit();
+        },
+      rules: {
+        username: {
+          required: true,
+          email: true
+        },
+        password: "required"
+      },
+      messages: {
+        username: {
+         required: "Введите адрес электронной почты",
+         email: "Не правильный адрес эл. почты"
+	},
+	password: {
+	 required: "Введите пароль"
+	}
+      }
+    });
+  </script>
+</body>
+</html>

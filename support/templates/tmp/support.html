@@ -1,0 +1,129 @@
+{% extends "main.html" %}
+{% block content %}
+
+<style type="text/css">
+
+.iframe-container {
+    position: relative;
+    padding-bottom: 46.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+    }
+
+.iframe-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    }
+    
+</style>
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Обращения в техподдержку</h1>
+    <ol class="breadcrumb">
+        <li><a href="/home" class="ajax"><i class="fa fa-dashboard"></i> Главная</a></li>
+        <li class="active"> Обращения в техподдержку</li>
+    </ol>
+
+    </ol>
+</section>
+
+<!-- ./Content Header (Page header) -->
+
+<!-- Main content -->
+<section class="content">
+<div class="row">
+    <div class="col-md-12 iframe-container">
+        <iframe id="support" allowfullscreen src="https://support.pudlink.ru/tickets.php"></iframe>
+    </div>
+</div>
+</section>
+
+<script>
+    var iframe = document.getElementById('support');
+    //iframe.style.opacity = "0";
+/*
+    iframe.onload = function() {
+		    document.domain = "pudlink.ru";
+		    $("#support").animate({opacity: 1},50);
+		    var innerDoc = (iframe.contentWindow || iframe.contentDocument);
+		    if (innerDoc.document)innerDoc = innerDoc.document;
+		    
+		    var ifBody = innerDoc.getElementsByTagName("BODY")[0];
+		    ifBody.style.backgroundImage = "none";
+		    ifBody.style.backgroundColor = "rgba(0,0,0,0)";
+		    ifBody.style.marginTop = "1.5em";
+	
+		    var ifContainer = innerDoc.getElementById("container");
+		    ifContainer.style.width = "90%";
+		    ifContainer.style.boxShadow = "none";
+	
+		    var ifHeader = innerDoc.getElementById("header");
+		    ifHeader.style.display = "none";
+		    
+		    var ifNav = innerDoc.getElementById("nav");
+		    ifNav.style.margin = "-1px 0px 0px 0px";
+		    ifNav.style.boxShadow = "none";
+	
+		    var ifFooter = innerDoc.getElementById("footer");
+		    ifFooter.style.display = "none";
+
+		    var formLogin = innerDoc.getElementById("clientLogin");
+		    if (formLogin != null) formLogin.addEventListener('click',redirect,false);
+		    
+		    
+		    articles1 = innerDoc.getElementsByTagName("a");
+		    for (var i = 0; i < articles1.length; i++) {
+			articles1[i].addEventListener('click',redirect,false);
+			}
+
+		    articles2 = innerDoc.getElementsByTagName("select");
+		    for (var i = 0; i < articles2.length; i++) {
+		    	var inputId = articles2[i].getAttribute("id");
+			if (inputId != 'topicId') articles2[i].addEventListener('change',redirect,false);
+			}
+
+		    articles3 = innerDoc.getElementsByTagName("div");
+		    for (var i = 0; i < articles3.length; i++) {
+			if (articles3[i].getAttribute("href") != null) articles3[i].addEventListener('click',redirect,false);
+			}
+
+		    articles4 = innerDoc.getElementsByTagName("input");
+		    for (var i = 0; i < articles4.length; i++) {
+			var inputType = articles4[i].getAttribute("type");
+			if (inputId != 'topicId' && inputType == 'submit' || inputType == 'button') articles4[i].addEventListener('click',redirect,false);
+			}
+
+		    function redirect(ev){
+			$("#support").animate({opacity: 0},10);
+		    }
+		    
+		    var username = innerDoc.getElementById("username");
+		    var userpass = innerDoc.getElementById("passwd");
+		    var submit = innerDoc.getElementById("submit-btn");
+		    //	username.value = '{{ username }}';
+		    //	userpass.value = '{{ password }}';
+		    username.value = "d_e_i@mail.ru";
+		    userpass.value = "Password01";
+		    
+		    submit.click();
+		    iframe.onload = null;
+	}
+*/
+iframe.onload = function() {
+    document.domain = "pudlink.ru";
+    var innerDoc = (iframe.contentWindow || iframe.contentDocument);
+    //if (innerDoc.document)innerDoc = innerDoc.document;
+    var ifContainer = innerDoc.getElementById("container");
+    alert(123);
+}
+	
+</script>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% load static %}
+<script>
+    setEventPopState();
+    window.onload = setEventClickAjax(".ajax");
+
+$('.skin-custom .has-treeview li').on('click', function() {
+    $('.skin-custom .treeview-menu li').removeClass('active');
+    $(this).attr('class','active');
+});
+
+function callModalDlg(url, params){
+    callModalPage(url, params);
+}
+
+</script>

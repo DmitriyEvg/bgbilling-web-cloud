@@ -1,0 +1,8 @@
+{% if selectedDeviceId == deviceId %}
+  <option selected value="{{currentIfaceId}}">&#xf00c{{currentIfaceTitle}}</option>
+{% endif %}
+
+{% for iface in ifaceList %}
+  <option value="{{iface.attrib.port}}">{{iface.attrib.title}}</option>
+{% endfor %}
+

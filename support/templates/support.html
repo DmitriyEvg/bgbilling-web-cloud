@@ -1,0 +1,90 @@
+{% extends "main.html" %}
+{% block content %}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Техподдержка</h1>
+            </div>    <!-- Breadcrumb -->
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="ajax breadcrumb-item"><a href="/home">Главная</a></li>
+                        <li class="breadcrumb-item active">Техподдержка</li>
+                    </ol>
+                </nav>
+            </div>    <!-- Breadcrumb end-->
+        </div>
+    </div>
+</section><!-- ./Content Header (Page header) -->
+
+
+
+<!-- Main content -->
+<section id="iframeContent" class="content" >
+    <div class="container-fluid">
+        <div class="row">
+            <div id="iframeContainer" class="col-md-12 iframe-container">
+                <iframe id="support" allowfullscreen src="https://support.pudlink.ru/lktickets.php"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Clear line -->
+
+
+<script>
+    var iframe = document.getElementById('support');
+    //iframe.style.height = "0px";
+    var ifContainer = document.getElementById('iframeContainer');
+    iframe.onload = function() {
+     document.domain = "pudlink.ru";
+     $("#support").css({ "opacity": "1"});
+     var innerDoc = (iframe.contentWindow || iframe.contentDocument);
+     if (innerDoc.document)innerDoc = innerDoc.document;
+
+     var ifBody = innerDoc.getElementsByTagName('body')[0]
+     if (ifBody != null) {
+         ifBody.style.backgroundColor = "transparent";
+     }
+
+     var ifWrapper = innerDoc.getElementById("wrapper");
+     if (ifWrapper != null) {
+         var offsetHeight = ifWrapper.offsetHeight;
+         iframeContainer.style.height = offsetHeight + 32 + "px";
+     }
+
+     var containerFluid = innerDoc.getElementById("containerFluid");
+     if (containerFluid != null) containerFluid.style.backgroundColor = "transparent";
+
+     var ifFooter = innerDoc.getElementById("footer");
+     if (ifFooter != null) ifFooter.style.display = "none";
+
+     var ifLogout = innerDoc.getElementById("logout");
+     if (ifLogout != null) ifLogout.style.display = "none";
+
+     articles1 = innerDoc.getElementsByTagName("a");
+     for (var i = 0; i < articles1.length; i++) {
+         var inputHref = articles1[i].getAttribute("href");
+         if (inputHref != '#') articles1[i].addEventListener('click',redirect,false);
+     }
+
+
+     function redirect(ev){
+         $("#support").css({ "opacity": "0"});
+     }
+
+     var username = innerDoc.getElementById("username");
+     var userpass = innerDoc.getElementById("passwd");
+     var submit = innerDoc.getElementById("submit-btn");
+     if (username != null) username.value = '{{ username }}';
+     if (userpass != null) userpass.value = '{{ password }}';
+
+     var ifErrorMsg = innerDoc.getElementById("msg_error");
+     if (submit != null) {if (ifErrorMsg == null) submit.click()};
+        //iframe.onload = null;
+    }
+</script>
+
+{% endblock %}

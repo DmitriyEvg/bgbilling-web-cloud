@@ -1,0 +1,169 @@
+{% extends "main.html" %}
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Детализация</h1>
+            </div>    <!-- Breadcrumb -->
+            <div class="col-sm-6">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="ajax breadcrumb-item"><a href="/home">Главная</a></li>
+                        <li class="breadcrumb-item"><a href="/#">Оплата и финансы</a></li>
+                        <li class="breadcrumb-item active">Детализация</li>
+                    </ol>
+                </nav>
+            </div>    <!-- Breadcrumb end-->
+        </div>
+    </div>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+      <div class="row ">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title d-inline">Детальный баланс</h3>
+                    <!-- Date and time range -->
+                    <div class=" float-right d-inline ">
+                        <p class="d-inline">Выбор периода </p>
+                        <div class="input-group d-inline">
+                           <button type="button" class="btn btn-default  d-inline " id="daterange-btn">
+                               <span>
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <input type="hidden" name="version" value="1">
+                    </div>
+                </div><!-- /.form group -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="tb_balanceDetail" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Тип платежа</th>
+                            <th>Сумма</th>
+                            <th>Остаток</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for element in elements %}
+                        {% if element.attrib.title != "Входящий остаток на начало месяца" %}
+                        {% if element.attrib.title != "Исходящий остаток на конец месяца" %}
+                        <tr style="background: {{ element.attrib.type }}">
+                            <td>{{ element.attrib.date }}</td>
+                            <td>{{ element.attrib.title }}</td>
+                            <td>{{ element.attrib.sum }}</td>
+                            <td>{{ element.attrib.sumAfterChange }}</td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <h1>{{ length }}</h1>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div><!-- /.row -->
+</div>
+</div>
+</section><!-- /.content -->
+
+<h1>{{ length }}</h1>
+
+<script type="text/javascript">
+//Date range as a button
+var dateFrom = '{{ dateFrom }}'.substr(0,10).replace(/-/g,".");
+var dateTo = '{{ dateTo }}'.substr(0,10).replace(/-/g,".");
+
+
+$('#daterange-btn').daterangepicker(
+{
+    "locale": {
+        "format": "YYYY.MM.DD",
+        "separator": " - ",
+        "applyLabel": "Применить",
+        "cancelLabel": "Отмена",
+        "fromLabel": "From",
+        "toLabel": "To",
+        "customRangeLabel": "Произвольный период",
+        "weekLabel": "W",
+        "daysOfWeek": [
+        "Вс",
+        "Пн",
+        "Вт",
+        "Ср",
+        "Чт",
+        "Пт",
+        "Сб"
+        ],
+        "monthNames": [
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль",
+        "Август",
+        "Сентябрь",
+        "Октябрь",
+        "Ноябрь",
+        "Декабрь"
+        ],
+        "firstDay": 1
+    },
+    "showDropdowns": true,
+    "alwaysShowCalendars": false,
+    "opens": "right",
+    startDate: dateFrom,
+    endDate: dateTo,
+    ranges: {
+        'Месяц': [moment().startOf('month'), moment().endOf('month')],
+        '3 мес.': [moment().subtract(2, 'month').startOf('month'), moment().endOf('month')],
+        '6 мес.': [moment().subtract(5, 'month').startOf('month'), moment().endOf('month')],
+        '12 мес.': [moment().subtract(11, 'month').startOf('month'), moment().endOf('month')],
+        'Все': ['{{ dateCreated }}', moment().endOf('month')]
+    }
+}, function (start, end){
+    dateFrom = start;
+    dateTo = end;
+});
+
+$('#daterange-btn').on('apply.daterangepicker', function(ev, picker) {
+    // Формируем даты в формате iso
+    
+    dateFrom = '&dateFrom=' + dateFrom.format('YYYY-MM-DD') + 'T00:00:00';
+    dateTo = '&dateTo=' + dateTo.format('YYYY-MM-DD') + 'T23:59:59.999';
+    
+    // Получаем текущй url
+    current_url_path = window.location.pathname.substr(0,window.location.pathname.length - 1);
+
+    // Отправляем POST запрос
+    callPage(current_url_path, true, dateFrom+dateTo);
+});
+
+$('#daterange-btn span').html(dateFrom.substr(0,10).replace(/-/g,".") + ' - ' + dateTo.substr(0,10).replace(/-/g,"."));
+
+$('#tb_balanceDetail').DataTable({
+  "dom": '<"top"i>rt<"bottom"flp><"clear">',
+  "paging": false,
+  "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+  "lengthChange": true,
+  "searching": false,
+  "order": [[ 0, "desc" ]],
+  "info": false,
+  "autoWidth": false
+});
+</script>
+
+
+{% endblock %}

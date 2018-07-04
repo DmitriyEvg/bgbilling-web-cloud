@@ -1,0 +1,183 @@
+<!-- Left side column. contains the logo and sidebar -->
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary">
+<a href="/home" class="brand-link2" >
+   <img src="{% static "dist/img/logo.png" %}" alt="Logo" class="brand-image  "
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">     Личный кабинет</span>
+    </a>
+    
+
+ <!-- sidebar: style can be found in sidebar.less -->
+ <div class="sidebar">
+  <!-- sidebar menu: : style can be found in sidebar.less -->
+  <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <!-- begin Главная -->
+      <li class="nav-item has-treeview ">
+       <a href="/home" class="ajax nochild nav-link">
+        <i class="nav-icon fa fa-dashboard"></i> 
+        <p>Главная</p>
+      </a>
+    </li>
+    <!-- end Главная -->
+
+    <!-- begin Управление услугами -->
+    <li class="nav-item has-treeview">
+      <a href="#" class="ajax nav-link">
+        <i class="fa fa-gears nav-icon "></i> 
+        <p>Услуги
+         <i class="right fa fa-angle-left"></i>
+       </p>
+     </a>
+     <ul class="nav nav-treeview">
+       <li class="nav-item">
+        <a href="/inet" class="ajax nav-link">
+                
+          <p style="padding-left: 2rem;">Интернет</p>
+        </a>
+      </li>
+      <li class="nav-item ">
+        <a href="/collocation" class="ajax nav-link">
+          <p style="padding-left: 2rem;">Колокейшн          </p>
+        </a>
+      </li>
+      <!-- <li class="nav-item">
+        <a href="#" class="ajax nav-link">
+                <i class="fa fa-circle-o nav-icon"></i>
+          </i>
+          <p>Выделенные серверы
+          </p>
+        </a>
+      </li> -->
+      <li class="nav-item">
+        <a href="/virt" class="ajax nav-link">
+          <p style="padding-left: 2rem;">Виртуальные серверы</p>
+        </a>
+      </li>
+      <!-- <li class="nav-item">
+        <a href="#" class="ajax nav-link">
+                <i class="fa fa-circle-o nav-icon"></i>
+         <p>Администрирование</p>
+       </a>
+     </li> -->
+           <!--   <li class="nav-item">
+              <a href="#" class="ajax">
+                <i class="fa fa-cloud-upload nav-icon "></i>
+                <p>Резервное копир.</p>
+              </a>
+            </li> -->
+          </ul>
+        </li>
+        <!-- end Управление услугами -->
+
+
+        <!-- begin Управление счетами -->
+        <li class="nav-item has-treeview">
+          <a href="#" class="ajax nav-link">
+            <i class="fa fa-ruble nav-icon"></i> 
+            <p>Оплата и финансы
+              <i class="fa fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#modalDlgParent" data-toggle="modal" onclick="callModalDlg('/bill/proceedPaymant','');" class="nav-link">
+                <p style="padding-left: 2rem;"> Пополнить счет</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/bill/detail" class="ajax nav-link">
+                <p style="padding-left: 2rem;"> Детализация</p>
+              </a>
+            </li>
+
+<!--             <li class="nav-item"><a href="#" class="ajax nav-link">
+              <i class="fa fa-circle-o nav-icon"></i>
+              <p> Обещанный платеж</p>
+            </a>
+          </li> -->
+
+<!--           <li class="nav-item">
+            <a href="#" class="ajax nav-link">
+              <i class="fa fa-circle-o nav-icon"></i>
+              <p> Бух. документы</p>
+            </a>
+          </li> -->
+
+        </ul>
+      </li>
+      <!-- end Управление счетами -->
+
+
+      <!-- begin Программа лояльности -->
+<!-- <li class="treeview">
+  <a href="#" class="ajax">
+    <i class="fa fa-thumbs-up"></i> <span>Программа лояльности</span>
+    <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+    </span>
+  </a>
+  <ul class="treeview-menu">
+
+    <li><a href="#" class="ajax">
+      <i class="fa fa-circle"></i>
+      <span> Накопительные бонусы</span>
+      <span class="pull-right-container">
+       <span class="label pull-right bg-blue"></span>
+     </span>
+   </a></li>
+
+   <li><a href="#" class="ajax">
+    <i class="fa fa-circle"></i>
+    <span> Персональные бонусы</span>
+    <span class="pull-right-container">
+     <span class="label pull-right bg-blue"></span>
+   </span>
+ </a></li>
+
+
+</ul>
+</li> -->
+<!-- begin Проддержка -->
+<li class="nav-item has-treeview">
+ <a href="/support" class="ajax nav-link">
+  <i class="nav-icon fa  fa-support"></i> 
+  <p>Поддержка</p>
+</a>
+</li>
+
+<!-- /.Поддержка -->
+
+
+<!-- begin Управление аккаунтом -->
+<li class="nav-item has-treeview">
+  <a href="#" class="ajax nav-link">
+    <i class="fa fa-user nav-icon"></i> 
+    <p>Аккаунт
+      <i class="fa fa-angle-left right"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview">
+    <li class="nav-item"><a href="/access/contractData" class="ajax nav-link">
+      <p style="padding-left: 2rem;">Данные</p>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a href="/access/pswdChange" class="ajax nav-link">
+      <p style="padding-left: 2rem;">Смена пароля</p>
+    </a>
+  </li>
+
+</ul>
+</li>
+<!-- /.Управление аккаунтом -->
+
+
+</ul>
+</nav>
+</div>
+<!-- /.sidebar -->
+</aside>

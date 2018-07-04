@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Данные</h1>
+    <ol class="breadcrumb">
+        <li><a href="/home" class="ajax"><i class="fa fa-dashboard"></i> Главная</a></li>
+        <li class="active"> Управление аккаунтом</li>
+        <li class="active"> Данные</li>
+    </ol>
+</section><!-- ./Content Header (Page header) -->
+
+<!-- ./Content Header (Page header) -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    
+    <div class="col-md-12">
+      <form method="post">{% csrf_token %}
+        <div class="box box-warning">
+
+    	  <div class="box-header with-border">
+            <i class="fa fa-list-alt"></i>
+            <h3 class="box-title">Регистрационные данные</h3>
+            <div class="box-tools pull-right">
+    	      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div><!-- /.box-tools -->
+    	  </div><!-- /.box-header -->
+
+    {% for contractParam in contractParams.params %}
+	<li>{{ contractParam.attrib.value }}</li>
+    {% endfor %}
+
+    </div><!-- /.col -->
+
+
+  </div><!-- /.row -->
+</section><!-- ./content -->
+
+
+{% endblock %}

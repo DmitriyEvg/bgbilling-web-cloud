@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<script> document.domain = 'pudlink.ru'; </script>
+
+{% include 'head.html' %}
+    <body class="hold-transition skin-blue fixed sidebar-mini">
+        <div class="wrapper">
+        {% include 'header.html' %}
+        {% include 'sidebar.html' %}
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper" id="content-wrapper">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <!-- /.content-wrapper -->
+            {% include 'modals.html' %}
+            {% include 'footer.html' %}
+        </div>
+        <!-- ./wrapper -->
+        {% include 'scripts.html' %}
+    </body>
+</html>
