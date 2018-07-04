@@ -1,5 +1,5 @@
 var xmlHttp = new XMLHttpRequest();
-var general_url="https://lk4.pudlink.ru"
+var general_url="https://lk4.your_domain.name"
 
 // Слушатель для событий popstate
 function setEventPopState(){

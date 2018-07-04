@@ -79,7 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lkbilling.wsgi.application'
 
-CSRF_COOKIE_DOMAIN = '.pudlink.ru'
+CSRF_COOKIE_DOMAIN = '.your_domain.name'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

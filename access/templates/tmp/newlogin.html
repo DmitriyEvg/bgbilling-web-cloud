@@ -39,7 +39,7 @@
 
 <body class="hold-transition register-page">
 <div class="login-box">
-  <div class="login-logo-img" style="background: url('https://lkbilling.pudlink.ru/static/img/linux-vps.png') no-repeat 0 0; height: 8em; background-size: contain;"/></div>
+  <div class="login-logo-img" style="background: url('https://lkbilling.your_domain.name/static/img/linux-vps.png') no-repeat 0 0; height: 8em; background-size: contain;"/></div>
     {% if typeForm == "Login" or typeForm == "Logout" %}
     <div class="login-box-body">
       <h4 class="login-box-msg">Вход в личный кабинет</h4>
@@ -71,7 +71,7 @@
 	{% if typeForm == "Requisite" %}
     {% endif %}
 
-    <div class="login-box-footer">ООО "Пудлинк" <a href="http://pudlink.ru">http://pudlink.ru</a></div>
+    <div class="login-box-footer">ООО "Пудлинк" <a href="http://your_domain.name">http://your_domain.name</a></div>
   </div>  
 
     {% if typeForm == "Logout" %}
@@ -84,9 +84,9 @@
 
     <script>
       var iframeId = document.getElementById('iframeId');
-      iframeId.src="https://support.pudlink.ru/logout.php";
+      iframeId.src="https://support.your_domain.name/logout.php";
       iframeId.onload = function() {
-      iframeId.src="https://virtcloud.pudlink.ru/accounts/logout/";
+      iframeId.src="https://virtcloud.your_domain.name/accounts/logout/";
         iframeId.onload = function() {
           window.history.pushState("","", '/access/login/');
           }

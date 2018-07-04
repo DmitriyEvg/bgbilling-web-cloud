@@ -40,7 +40,7 @@
 <section class="content">
 <div class="row">
     <div class="col-md-12 iframe-container">
-        <iframe id="support" allowfullscreen src="https://support.pudlink.ru/tickets.php"></iframe>
+        <iframe id="support" allowfullscreen src="https://support.your_domain.name/tickets.php"></iframe>
     </div>
 </div>
 </section>
@@ -50,7 +50,7 @@
     //iframe.style.opacity = "0";
 /*
     iframe.onload = function() {
-		    document.domain = "pudlink.ru";
+		    document.domain = "your_domain.name";
 		    $("#support").animate({opacity: 1},50);
 		    var innerDoc = (iframe.contentWindow || iframe.contentDocument);
 		    if (innerDoc.document)innerDoc = innerDoc.document;
@@ -117,7 +117,7 @@
 	}
 */
 iframe.onload = function() {
-    document.domain = "pudlink.ru";
+    document.domain = "your_domain.name";
     var innerDoc = (iframe.contentWindow || iframe.contentDocument);
     //if (innerDoc.document)innerDoc = innerDoc.document;
     var ifContainer = innerDoc.getElementById("container");

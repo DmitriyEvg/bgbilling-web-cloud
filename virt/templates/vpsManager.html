@@ -34,9 +34,9 @@
                     <div class="col-12">
                         <div class="iframe-container">
                             {% if request.session.contractChangeState = 'true' %}
-                            <iframe id="vps" allowfullscreen src="https://virtcloud.pudlink.ru/accounts/lklogin/"></iframe> 
+                            <iframe id="vps" allowfullscreen src="https://virtcloud.your_domain.name/accounts/lklogin/"></iframe> 
                             {% else %}
-                            <iframe id="vps" allowfullscreen src="https://virtcloud.pudlink.ru/instances/"></iframe>
+                            <iframe id="vps" allowfullscreen src="https://virtcloud.your_domain.name/instances/"></iframe>
                             {% endif %}
                         </div>
                     </div>
@@ -356,7 +356,7 @@
 <script>
     var iframe = document.getElementById("vps");
     iframe.onload = function() {
-       document.domain = "pudlink.ru";
+       document.domain = "your_domain.name";
        var innerDoc = (iframe.contentWindow || iframe.contentDocument);
        if (innerDoc.document)innerDoc = innerDoc.document;
 

@@ -61,9 +61,9 @@
     </div>
     <script>
       var iframeId = document.getElementById('iframeId');
-      iframeId.src="https://support.pudlink.ru/logout.php";
+      iframeId.src="https://support.your_domain.name/logout.php";
       iframeId.onload = function() {
-      iframeId.src="https://virtcloud.pudlink.ru/accounts/logout/";
+      iframeId.src="https://virtcloud.your_domain.name/accounts/logout/";
         iframeId.onload = function() {
           window.history.pushState("","", '/access/login/');
           }
@@ -408,7 +408,7 @@
 					$("#cParam9").mask("+7(999) 999-9999");
 					// Подключение DaData поле ИНН
 					$("#party").suggestions({
-						token: "bd494950ed1bef112081b5328ec4edea63de8406",
+						token: "XXXX-XXXX-XXXX-XXXX",
 						type: "PARTY",
 						count: 5,
 						/* Вызывается, когда пользователь выбирает одну из подсказок */

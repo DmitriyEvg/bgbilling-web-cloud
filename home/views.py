@@ -27,7 +27,7 @@ def ContractInfo(request, cid):
     date = now.strftime("%d.%m.%Y")
 
     # Запрос на получение информацию по абонплатам:
-    conn = http.client.HTTPSConnection("bill.pudlink.ru", context=ssl._create_unverified_context())
+    conn = http.client.HTTPSConnection("bill.your_domain.name", context=ssl._create_unverified_context())
     conn.request("GET", "%s?user=%s&pswd=%s&actualItemsDate=%s&module=npay&actualItemsOnly=1&action=ServiceObjectTable&mid=1&object_id=0&cid=%s" % (BILL_EXECUTER_PATH, BILL_USER, BILL_PSWD, date, cid) )
     rqst = conn.getresponse()
     xml = rqst.read()

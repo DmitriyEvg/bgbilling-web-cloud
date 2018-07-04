@@ -18,14 +18,14 @@ E....D@.@..............@.......T...V.......
 ..`
 ..POST /console/actions/ HTTP/1.0
 X-Forwarded-Proto: https
-Host: virtcloud.pudlink.ru
+Host: virtcloud.your_domain.name
 Connection: close
 Content-Length: 62
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0
 Accept: */*
 Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
 Accept-Encoding: gzip, deflate, br
-Referer: https://virtcloud.pudlink.ru/console/actions/
+Referer: https://virtcloud.your_domain.name/console/actions/
 Content-Type: application/x-www-form-urlencoded
 Cookie: csrftoken=SgomewEUUtSYWM93Y2qTgHLghs1jXCqp; instances_filter=cent; sessionid=me99p3zq5szmykjbepyyzp5fc4j3je2s; token=4-b39f7ffb-485d-421f-b291-5fa336a6289d
 
@@ -92,14 +92,14 @@ E.....@.@..j...........@...iU..s...V.......
 ..`
 ..POST /console/actions/ HTTP/1.0
 X-Forwarded-Proto: https
-Host: virtcloud.pudlink.ru
+Host: virtcloud.your_domain.name
 Connection: close
 Content-Length: 62
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0
 Accept: */*
 Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
 Accept-Encoding: gzip, deflate, br
-Referer: https://virtcloud.pudlink.ru/console/actions/
+Referer: https://virtcloud.your_domain.name/console/actions/
 Content-Type: application/x-www-form-urlencoded
 Cookie: csrftoken=SgomewEUUtSYWM93Y2qTgHLghs1jXCqp; instances_filter=cent; sessionid=me99p3zq5szmykjbepyyzp5fc4j3je2s; token=4-b39f7ffb-485d-421f-b291-5fa336a6289d
 

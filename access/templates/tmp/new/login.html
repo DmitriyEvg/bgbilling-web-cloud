@@ -70,7 +70,7 @@
 
               <div>
                 <h1><i class="fa fa-dashboard"></i> Личный кабинет</h1>
-                <p><strong>ООО "Пудлинк" <a href="http://pudlink.ru">http://pudlink.ru</a></strong></p>
+                <p><strong>ООО "Пудлинк" <a href="http://your_domain.name">http://your_domain.name</a></strong></p>
               </div>
             </div>
           </form>
@@ -89,9 +89,9 @@
   
   <script>
     var iframeId = document.getElementById('iframeId');
-    iframeId.src="https://support.pudlink.ru/logout.php";
+    iframeId.src="https://support.your_domain.name/logout.php";
     iframeId.onload = function() {
-    iframeId.src="https://virtcloud.pudlink.ru/accounts/logout/";
+    iframeId.src="https://virtcloud.your_domain.name/accounts/logout/";
       iframeId.onload = function() {
         window.history.pushState("","", '/access/login/');
         }

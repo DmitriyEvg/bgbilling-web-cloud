@@ -26,7 +26,7 @@
     <div class="container-fluid">
         <div class="row">
             <div id="iframeContainer" class="col-md-12 iframe-container">
-                <iframe id="support" allowfullscreen src="https://support.pudlink.ru/lktickets.php"></iframe>
+                <iframe id="support" allowfullscreen src="https://support.your_domain.name/lktickets.php"></iframe>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
     //iframe.style.height = "0px";
     var ifContainer = document.getElementById('iframeContainer');
     iframe.onload = function() {
-     document.domain = "pudlink.ru";
+     document.domain = "your_domain.name";
      $("#support").css({ "opacity": "1"});
      var innerDoc = (iframe.contentWindow || iframe.contentDocument);
      if (innerDoc.document)innerDoc = innerDoc.document;
